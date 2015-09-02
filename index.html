@@ -2,13 +2,53 @@
 <html ng-app="ACTimer">
 <head>
 	<title>ACTimer</title>
+	<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-	<script src="ACTimer.js"></script>
+	<script src="js/ACTimer.js"></script>
 </head>
 <body>
     <form>
-        <label for="timerDescription">Description</label>
-        <input id="timerDescription" name="timerDescription">
+	<div>
+        	<label for="timerHours">Hours</label>
+        	<input type="text" id="timerHours" name="timerHours">
+	</div>
+	<div>
+        	<label for="timerMinutes">Mins</label>
+        	<input type="text" id="timerMinutes" name="timerMinutes">
+	</div>
+	<div>
+        	<label for="timerSeconds">Secs</label>
+        	<input type="text" id="timerSeconds" name="timerSeconds">
+	</div>
+	<div>
+        	<label for="timerBillable">Billable</label>
+        	<input type="checkbox" id="timerBillable" name="timerBillable">
+	</div>
+	<div>
+        	<label for="timerDescription">Description</label>
+        	<input type="text" id="timerDescription" name="timerDescription">
+	</div>
+	<div>
+        	<label for="timerCategory">Category</label>
+        	<input type="text" id="timerCategory" name="timerCategory">
+	</div>
+	<div>
+        	<label for="timerDate">Date</label>
+        	<input type="date" id="timerDate" name="timerDate">
+	</div>
+	<div>
+        	<label for="timerProject">Project</label>
+        	<select id="timerProject" name="timerProject">
+		</select>
+	</div>
+	<div>
+        	<label for="timerTask">Task</label>
+        	<select id="timerTask" name="timerTask">
+		</select>
+	</div>
     </form>
 </body>
 </html>
