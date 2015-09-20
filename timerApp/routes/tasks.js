@@ -39,6 +39,7 @@ router.get('/:id', function(req, res, next) {
 
     if (req.params.id === "reload")
     {
+
         var thisQs = baseQs;
 
         thisQs.path_info = "projects";

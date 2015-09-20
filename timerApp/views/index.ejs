@@ -1,11 +1,81 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html ng-app="ACTimer">
+<head>
+    <title>ACTimer</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/awesome-bootstrap-checkbox.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script src="javascripts/ACTimer.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="column full" >
+        <div class="form-group">
+            <div class="row clearfix">
+                <div class="input-group column full">
+                    <input type="text" id="timerDescription" class="form-control" placeholder="Description" name="timerDescription">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="input-group column third">
+                    <input type="text" id="timerHours" class="form-control" placeholder="Hours" name="timerHours">
+                </div>
+                <div class="input-group column third">
+                    <input type="text" id="timerMinutes" class="form-control" placeholder="Mins" name="timerMinutes">
+                </div>
+                <div class="input-group column third">
+                    <input type="text" id="timerSeconds" class="form-control" placeholder="secs" name="timerSeconds">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="dropdown column half">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Category
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+                    </ul>
+                </div>
+                <div class="input-group column half">
+                    <input type="date" id="timerDate" name="timerDate">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="dropdown column half">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Project
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+                    </ul>
+                </div>
+                <div class="dropdown column half">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Task
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="input-group column full">
+                    <input type="submit" value="Add Timer" class="btn btn-primary">
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" id="timerBillable"  name="timerBillable">
+                        <label for="timerBillable">Billable</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>

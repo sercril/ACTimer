@@ -1,0 +1,67 @@
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.container {
+  margin: 0 auto;
+  width: 90%;
+}
+
+
+.column {
+  float: left;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+}
+
+.full {  .column;  width: 100%; }
+.two-thirds {  .column;  width: 66.7%; }
+.half {  .column;  width: 50%; }
+.third {  .column;  width: 33.3%; }
+.fourth {  .column;  width: 25%; }
+.flow-opposite {  .column;  float: right; }
+
+.row {
+  margin: 1em auto;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+.dropdown {
+  .btn{
+    width: 100%;
+  }
+}
+
+.checkbox {
+
+}
+
+input[type=date] {
+  width: 100%;
+  height: 100%;
+}
