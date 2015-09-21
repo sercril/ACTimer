@@ -17,6 +17,7 @@
     "request": "~2.61.0"
   },
   "devDependencies": {
+    "activecollab": "0.0.2",
     "less": "~2.5.1"
   }
 }

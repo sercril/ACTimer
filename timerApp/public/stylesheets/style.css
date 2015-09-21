@@ -74,6 +74,12 @@ a {
 .dropdown .btn {
   width: 100%;
 }
+.checkbox {
+  margin: auto 1em;
+}
+.checkbox label::after {
+  padding-top: 3px;
+}
 input[type=date] {
   width: 100%;
   height: 100%;

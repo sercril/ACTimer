@@ -2,30 +2,22 @@ var express = require('express');
 var router = express.Router();
 
 var mongoose = require("mongoose");
-var Tasks = require("../models/Task.js");
+var Task = require("../models/Task.js");
 
 var Request = require("request");
 
 var apiUrl = "http://projects.firefly.cc/";
 var apiKey = "19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF";
 
-var AC = Request.defaults({
-    baseUrl : apiUrl
-});
+var ActiveCollab = require('activecollab');
 
-var baseQs = {
-    auth_api_token : apiKey,
-    format: "json",
-    method:"GET"
-};
-
-
+var ac = new ActiveCollab(apiUrl, apiKey);
 
 //http://projects.firefly.cc/api.php?path_info=projects&auth_api_token=19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF&format=json&submitted=submitted
 
 //GET operations
 router.get('/', function(req, res, next) {
-  Tasks.find(function(err, Tasks){
+  Task.find(function(err, Tasks){
      if(err)
      {
          return next(err);
@@ -37,20 +29,31 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
 
+    var tasks;
+
     if (req.params.id === "reload")
     {
+        Task.remove({});
+        ac.projects.getAll(function(ps){
 
-        var thisQs = baseQs;
+            ps.forEach(function(project){
+                ac.tasks.getAll(project.id, function(ts){
 
-        thisQs.path_info = "projects";
-        thisQs.submitted = "submitted";
-        AC.get({
-            url : "api.php?auth_api_token="+apiKey+"&format=json&path_info=projects&submitted=submitted"
-        },
-        function (err, response, body)
-        {
-            console.log(body);
-            res.json(body);
+                    if(ts !== null && typeof ts !== 'undefined' && ts.constructor === Array)
+                    {
+                        ts.forEach(function(t){
+                            Task.create({
+                                taskId: t.id,
+                                taskName: t.name,
+                                projectId: project.id,
+                                projectName: project.name
+                            });
+                        });
+                    }
+
+                });
+            });
+
         });
     }
     else
