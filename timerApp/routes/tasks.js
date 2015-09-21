@@ -29,8 +29,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
 
-    var tasks;
-
     if (req.params.id === "reload")
     {
         Task.remove({});

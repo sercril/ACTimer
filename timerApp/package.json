@@ -14,7 +14,8 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "nodemon": "~1.4.1",
-    "request": "~2.61.0"
+    "request": "~2.61.0",
+    "react-tools": "~0.13.3"
   },
   "devDependencies": {
     "activecollab": "0.0.2",

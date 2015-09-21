@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="stylesheets/font-awesome-4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="stylesheets/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" href="stylesheets/style.css">
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-    <script src="javascripts/ACTimer.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="javascripts/build/ACTimer.js"></script>
 </head>
 <body>
 <div class="container">
@@ -52,7 +53,7 @@
                         Project
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <ul class="dropdown-menu"  aria-labelledby="dropdownMenu1" id="ProjectList">
 
                     </ul>
                 </div>
@@ -61,7 +62,7 @@
                         Task
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <ul class="dropdown-menu" id="TaskList" aria-labelledby="dropdownMenu1">
 
                     </ul>
                 </div>
