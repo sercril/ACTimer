@@ -6,6 +6,7 @@ var ProjectList = React.createClass({
     loadTasksFromServer: function() {
         $.ajax({
             url: this.props.url,
+            async:true,
             type: 'get',
             dataType: 'json',
             cache: false,
@@ -28,7 +29,16 @@ var ProjectList = React.createClass({
             );
         });
         return(
-            {taskNodes}
+            <div className="dropdown column half">
+                <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Project
+                    <span class="caret"></span>
+                </button>
+                <ul className="dropdown-menu"  aria-labelledby="dropdownMenu1" >
+                    {taskNodes}
+                </ul>
+            </div>
+
         );
     }
 });
