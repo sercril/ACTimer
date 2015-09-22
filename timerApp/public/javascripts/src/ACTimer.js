@@ -29,15 +29,16 @@ var ProjectList = React.createClass({
             );
         });
         return(
-            <div className="dropdown column half">
-                <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Project
-                    <span class="caret"></span>
-                </button>
-                <ul className="dropdown-menu"  aria-labelledby="dropdownMenu1" >
-                    {taskNodes}
-                </ul>
-            </div>
+            <ul class="nav nav-pills">
+                <li className="dropdown">
+                    <a className="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+                        Project <span class="caret"></span>
+                    </a>
+                    <ul className="dropdown-menu">
+                        {taskNodes}
+                    </ul>
+                </li>
+            </ul>
 
         );
     }
@@ -47,7 +48,7 @@ var Project = React.createClass({
 
     render: function() {
         return(
-            <li>{this.props.data.projectName}</li>
+            <li><a href="#">{this.props.data.projectName}</a></li>
         );
     }
 
@@ -56,7 +57,7 @@ var Project = React.createClass({
 
 $().ready(function(){
     React.render(
-        <ProjectList url="http://localhost:3000/tasks/" pollInterval={5000} />,
+        <ProjectList url="http://localhost:3000/projects/" pollInterval={5000} />,
         document.getElementById('ProjectList')
     );
 });

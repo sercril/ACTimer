@@ -3,6 +3,7 @@ var router = express.Router();
 
 var mongoose = require("mongoose");
 var Task = require("../models/Task.js");
+var Projects = require("../models/Project.js");
 
 var Request = require("request");
 
@@ -36,15 +37,17 @@ router.get('/:id', function(req, res, next) {
 
             ps.forEach(function(project){
                 ac.tasks.getAll(project.id, function(ts){
-
+                    Projects.create({
+                        projectId: project.id,
+                        projectName: project.name
+                    });
                     if(ts !== null && typeof ts !== 'undefined' && ts.constructor === Array)
                     {
                         ts.forEach(function(t){
                             Task.create({
                                 taskId: t.id,
                                 taskName: t.name,
-                                projectId: project.id,
-                                projectName: project.name
+                                projectId: project.id
                             });
                         });
                     }
