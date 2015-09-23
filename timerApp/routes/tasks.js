@@ -35,7 +35,6 @@ router.get('/:id', function(req, res, next) {
         Task.remove();
         Projects.remove();
         ac.projects.getAll(function(ps){
-
             ps.forEach(function(project){
                 ac.tasks.getAll(project.id, function(ts){
                     Projects.create({
@@ -62,7 +61,7 @@ router.get('/:id', function(req, res, next) {
     }
     else
     {
-        Tasks.findById(req.params.id,function(err, post) {
+        Task.findById(req.params.id,function(err, post) {
             if(err)
             {
                 return next(err);
@@ -73,6 +72,17 @@ router.get('/:id', function(req, res, next) {
     }
 
 
+});
+
+router.get('/project/:id', function(req, res, next) {
+    Task.find({projectId:req.params.id},function(err, post) {
+        if(err)
+        {
+            return next(err);
+        }
+
+        res.json(post);
+    });
 });
 
 //POST operations
