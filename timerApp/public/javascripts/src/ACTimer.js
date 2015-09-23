@@ -1,3 +1,11 @@
+var selectStyle= {
+    color:'#000',
+    width: '100%',
+    padding: '8px 5px',
+    fontSize: '16px'
+};
+
+
 var ProjectList = React.createClass({
 
     getInitialState: function (){
@@ -20,7 +28,7 @@ var ProjectList = React.createClass({
     },
     componentDidMount : function(){
         this.loadTasksFromServer();
-        //setInterval(this.loadTasksFromServer(), this.props.pollInterval);
+        setInterval(this.loadTasksFromServer(), this.props.pollInterval);
     },
     render: function () {
         var taskNodes = this.state.data.map(function (task) {
@@ -29,16 +37,11 @@ var ProjectList = React.createClass({
             );
         });
         return(
-            <ul class="nav nav-pills">
-                <li className="dropdown">
-                    <a className="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
-                        Project <span class="caret"></span>
-                    </a>
-                    <ul className="dropdown-menu">
-                        {taskNodes}
-                    </ul>
-                </li>
-            </ul>
+
+            <select name="project" style={selectStyle}>
+                {taskNodes}
+            </select>
+
 
         );
     }
@@ -48,7 +51,7 @@ var Project = React.createClass({
 
     render: function() {
         return(
-            <li><a href="#">{this.props.data.projectName}</a></li>
+            <option value="{this.props.data.projectId}">{this.props.data.projectName}</option>
         );
     }
 

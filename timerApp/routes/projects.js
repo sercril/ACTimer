@@ -6,7 +6,7 @@ var Projects = require("../models/Project.js");
 
 //GET operations
 router.get('/', function(req, res, next) {
-  Projects.find(function(err, timers){
+  Projects.find({}).sort('projectName').exec(function(err, timers){
      if(err)
      {
          return next(err);

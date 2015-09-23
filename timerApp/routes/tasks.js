@@ -32,7 +32,8 @@ router.get('/:id', function(req, res, next) {
 
     if (req.params.id === "reload")
     {
-        Task.remove({});
+        Task.remove();
+        Projects.remove();
         ac.projects.getAll(function(ps){
 
             ps.forEach(function(project){
@@ -56,6 +57,8 @@ router.get('/:id', function(req, res, next) {
             });
 
         });
+
+        res.json("Done");
     }
     else
     {
