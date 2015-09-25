@@ -1,2 +1,2 @@
 angular.module('services', [])
-    .service('')
+    .service('projectsHelper', [ProjectsHelper]);
