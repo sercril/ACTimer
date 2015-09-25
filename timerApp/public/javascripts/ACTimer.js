@@ -8,11 +8,6 @@ angular.module('actimer', [])
        //     return $http.get('/tasks');
        // }])
         .controller('ProjectsTasksController', ['$scope', function($scope){
-
-
-
-
-
             $scope.loadTasks = function(){
                 $http.get('/projects/'+$scope.selectedProject.projectId).success(function(data){
                     $scope.tasks = data;
