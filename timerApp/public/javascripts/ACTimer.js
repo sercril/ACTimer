@@ -1,42 +1,42 @@
 
 
-angular.module('actimer', ["services"])
-       .factory('Projects', ['$http', function($http){
-            return $http.get('/projects');
-        }])
-        .factory('Tasks', ['$http', function($http){
-            return $http.get('/tasks');
-        }])
-        .controller('ProjectsTasksController', ['$scope', 'Projects', , function($scope, $http){
-            GetProjects = function() {
-                return $http.get('/projects');
+angular.module('actimer', [])
+        .factory('ProjectsHelper', ['$http', function($http){
+            return {
+                
+                GetProjects: function(){
+                    return $http.get('/projects');
+                },
+                GetTasks: function(projectId){
+                    return $http.get('/tasks/project/'+projectId);
+                } 
             };
-
-            GetTasks = function(projId) {
-                return $http.get('/tasks/project/'+projId);
-            };
+        }])
+        .controller('ProjectsTasksController', ['$scope', 'ProjectsHelper', function($scope, ProjectsHelper){
+           
 
             $scope.loadTasks = function(){
-                $http.get('/tasks/project/'+$scope.selectedProject).success(function(data){
+                ProjectsHelper.GetTasks($scope.selectedProject).success(function(data){
                     $scope.tasks = data;
                 }).error(function(data, status){
                     $scope.tasks = [];
                 });
             };
+          
             $scope.loadProjects = function(){
-                var projects = GetProjects();
-                projects.success(function(data){
+                ProjectsHelper.GetProjects().success(function(data){
                     $scope.projects = data;
                 }).error(function(data, status){
-                    $scope.projects = 'error';
+                    $scope.projects = [];
                 });
-                console.log($scope.projects);
-                $scope.selectedProject = $scope.projects[0].projectId;
-                $scope.loadTasks();
             };
 
-
-
-
             $scope.loadProjects();
+        }])
+        .factory('CategoryHelper', ['$http', function(){
+            return $http.get('/category');
+        }])
+        .controller('CategoryController', ['$scope', 'CategoryHelper', function($scope, CategoryHelper){
+            
+            
         }]);

@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var timers = require('./routes/timers');
 var tasks = require('./routes/tasks');
 var projects = require('./routes/projects');
+var category = require('./routes/category');
 
 var mongoose = require('mongoose');
 
@@ -41,6 +42,7 @@ app.use('/', routes);
 app.use('/timers', timers);
 app.use('/tasks', tasks);
 app.use('/projects', projects);
+app.use('/category', category);
 
 
 // catch 404 and forward to error handler

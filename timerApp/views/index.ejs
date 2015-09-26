@@ -34,14 +34,10 @@
                 </div>
             </div>
             <div class="row clearfix">
-                <div class="dropdown column half">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Category
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-
-                    </ul>
+                <div class="dropdown column half" ng-controller="CategoryController">
+                    <select name="category" class="wide" ng-model="category">
+                        <option ng-repeat="category in categories" value="{{category.categoryId}}">{{category.categoryName}}</option>
+                    </select>
                 </div>
                 <div class="input-group column half">
                     <input type="date" id="timerDate" name="timerDate">
@@ -54,7 +50,7 @@
                     </select>
                 </div>
                 <div class="dropdown column half">
-                    <select name="task" class="wide">
+                    <select name="task" class="wide" ng-model="selectedTask">
                         <option ng-repeat="task in tasks" value="{{task.taskId}}">{{task.taskName}}</option>
                     </select>
                 </div>

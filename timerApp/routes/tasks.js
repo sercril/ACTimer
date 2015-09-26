@@ -18,13 +18,13 @@ var ac = new ActiveCollab(apiUrl, apiKey);
 
 //GET operations
 router.get('/', function(req, res, next) {
-  Task.find(function(err, Tasks){
+  Task.find(function(err, tasks){
      if(err)
      {
          return next(err);
      }
 
-     res.json(Tasks);
+     res.json(tasks);
   });
 });
 
