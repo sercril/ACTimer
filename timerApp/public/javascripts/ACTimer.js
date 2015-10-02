@@ -33,7 +33,7 @@ angular.module('actimer', [])
 
             $scope.loadProjects();
         }])
-        .factory('CategoryHelper', ['$http', function(){
+        .factory('CategoryHelper', ['$http', function($http){
             return $http.get('/category');
         }])
         .controller('CategoryController', ['$scope', 'CategoryHelper', function($scope, CategoryHelper){

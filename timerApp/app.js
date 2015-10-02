@@ -9,7 +9,7 @@ var routes = require('./routes/index');
 var timers = require('./routes/timers');
 var tasks = require('./routes/tasks');
 var projects = require('./routes/projects');
-var category = require('./routes/category');
+var category = require('./routes/categories');
 
 var mongoose = require('mongoose');
 

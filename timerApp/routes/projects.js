@@ -6,13 +6,16 @@ var Projects = require("../models/Project.js");
 
 //GET operations
 router.get('/', function(req, res, next) {
-  Projects.find({}).sort('projectName').exec(function(err, timers){
+  Projects.find({}).sort('projectName').exec(function(err, post){
      if(err)
      {
          return next(err);
      }
 
-     res.json(timers);
+      res.json(post.sort(function(a,b){
+          var x = a['projectName'].toLowerCase(); var y = b['projectName'].toLowerCase();
+          return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+      }));
   });
 });
 

@@ -81,7 +81,10 @@ router.get('/project/:id', function(req, res, next) {
             return next(err);
         }
 
-        res.json(post);
+        res.json(post.sort(function(a,b){
+            var x = a['taskName'].toLowerCase(); var y = b['taskName'].toLowerCase();
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        }));
     });
 });
 
