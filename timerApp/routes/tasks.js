@@ -4,6 +4,7 @@ var router = express.Router();
 var mongoose = require("mongoose");
 var Task = require("../models/Task.js");
 var Projects = require("../models/Project.js");
+var Category = require("../models/Category.js");
 
 var Request = require("request");
 
@@ -15,7 +16,7 @@ var ActiveCollab = require('activecollab');
 var ac = new ActiveCollab(apiUrl, apiKey);
 
 //http://projects.firefly.cc/api.php?path_info=projects&auth_api_token=19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF&format=json&submitted=submitted
-
+//http://projects.firefly.cc/api.php?path_info=projects/486/hourly-rates&auth_api_token=19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF&format=json&submitted=submitted
 //GET operations
 router.get('/', function(req, res, next) {
   Task.find(function(err, tasks){
@@ -54,8 +55,52 @@ router.get('/:id', function(req, res, next) {
 
                 });
             });
-            res.json("Done");
+
         });
+
+        Request({
+            url:"http://projects.firefly.cc/api.php",
+            qs: {
+                path_info:"projects/486/hourly-rates",
+                auth_api_token:"19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF",
+                format:"json",
+                submitted:"submitted"
+            },
+            method:"GET"
+        }, function(error,resp,body){
+            if(error)
+            {
+                console.error(error);
+            }
+            else
+            {
+
+                body = JSON.parse(body);
+                body.forEach(function(cat){
+                    if(Category.count({ categoryId:cat.id }) <= 0)
+                    {
+                        Category.create({
+                            categoryId:cat.id,
+                            categoryName:cat.name
+                        });
+                    }
+                    else
+                    {
+                        Category.update({
+                            categoryId:cat.id
+                        },
+                        {
+                            categoryName:cat.name
+                        });
+                    }
+
+                });
+
+
+                res.json("Done");
+            }
+        });
+
 
 
     }
