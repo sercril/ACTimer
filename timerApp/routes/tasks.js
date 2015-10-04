@@ -74,25 +74,17 @@ router.get('/:id', function(req, res, next) {
             }
             else
             {
-
+                Category.remove({}, function(){});
                 body = JSON.parse(body);
+
                 body.forEach(function(cat){
-                    if(Category.count({ categoryId:cat.id }) <= 0)
-                    {
-                        Category.create({
-                            categoryId:cat.id,
-                            categoryName:cat.name
-                        });
-                    }
-                    else
-                    {
-                        Category.update({
-                            categoryId:cat.id
-                        },
-                        {
-                            categoryName:cat.name
-                        });
-                    }
+
+
+                    Category.create({
+                        categoryId:cat.id,
+                        categoryName:cat.name
+                    });
+
 
                 });
 

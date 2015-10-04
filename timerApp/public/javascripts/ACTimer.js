@@ -37,6 +37,10 @@ angular.module('actimer', [])
             return $http.get('/category');
         }])
         .controller('CategoryController', ['$scope', 'CategoryHelper', function($scope, CategoryHelper){
-            
+            CategoryHelper.success(function(data){
+                $scope.categories = data;
+            }).error(function(data, status){
+                $scope.categories = [];
+            });
             
         }]);
