@@ -43,4 +43,53 @@ angular.module('actimer', [])
                 $scope.categories = [];
             });
             
+        }])
+        .factory("Timer", ['$request', function($request){
+
+            return {
+                Add: function(newTimer) {
+                    return $request.post(
+                        "http://localhost:3000/timers",
+                        newTimer,
+                        function(error, reponse, body){
+                            if(error)
+                            {
+                                console.log(error);
+                            }
+                        }
+                    );
+                }
+            };
+
+
+        }])
+        .controller("TimerFormController", ['$scope', "Timer", function($scope, Timer){
+
+            function validate()
+            {
+                var numReg = /[0-9]/;
+                return ($scope.description !== ""
+                        && numReg.text($scope.hours)
+                        && numReg.text($scope.minutes)
+                        && numReg.text($scope.seconds));
+            }
+
+            $scope.submit = function(){
+
+                var newTimer;
+
+                if(validate())
+                {
+                    newTimer = {
+                        description: $scope.
+                    };
+
+                    Timer.Add()
+                }
+                else
+                {
+                    console.log("Invalid Input");
+                }
+            };
+
         }]);
