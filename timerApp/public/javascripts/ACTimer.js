@@ -44,24 +44,16 @@ angular.module('actimer', [])
             });
             
         }])
-        .factory("Timer", ['$request', function($request){
+        .factory("Timer", ['$http', function($request){
 
             return {
                 Add: function(newTimer) {
-                    return $request.post(
+                    return $http.post(
                         "http://localhost:3000/timers",
-                        newTimer,
-                        function(error, reponse, body){
-                            if(error)
-                            {
-                                console.log(error);
-                            }
-                        }
+                        newTimer
                     );
                 }
             };
-
-
         }])
         .controller("TimerFormController", ['$scope', "Timer", function($scope, Timer){
 
@@ -69,22 +61,47 @@ angular.module('actimer', [])
             {
                 var numReg = /[0-9]/;
                 return ($scope.description !== ""
-                        && numReg.text($scope.hours)
-                        && numReg.text($scope.minutes)
-                        && numReg.text($scope.seconds));
+                        && numReg.test($scope.hours)
+                        && numReg.test($scope.minutes)
+                        && numReg.test($scope.seconds));
+            }
+
+            function convertTime()
+            {
+                return (($scope.hours * 3600) + ($scope.minutes * 60) + parseInt($scope.seconds));
             }
 
             $scope.submit = function(){
 
-                var newTimer;
+                var newTimer, time = convertTime();
+
+                newTimer = {
+                    description: $scope.description,
+                    category: $scope.selectedCategory,
+                    date: $scope.date,
+                    task: $scope.selectedTask,
+                    elapsedTime: time,
+                    billable: $scope.billable
+                };
+
+                console.log(newTimer);
+
+                return;
 
                 if(validate())
                 {
                     newTimer = {
-                        description: $scope.
+                        description: $scope.description,
+                        category: $scope.selectedCategory,
+                        date: $scope.date,
+                        task: $scope.selectedTask,
+                        elapsedTime: time,
+                        billable: $scope.billable
                     };
 
-                    Timer.Add()
+                    console.log(newTimer);
+
+                    //Timer.Add()
                 }
                 else
                 {

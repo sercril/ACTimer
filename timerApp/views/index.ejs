@@ -14,58 +14,60 @@
     <script src="javascripts/ACTimer.js"></script>
 </head>
 <body>
-<div class="container">
-    <div class="column full" >
-        <div class="form-group">
-            <div class="row clearfix">
-                <div class="input-group column full">
-                    <input type="text" id="timerDescription" class="form-control" placeholder="Description" name="timerDescription">
+<form ng-submit="submit()" ng-controller="TimerFormController">
+    <div class="container">
+        <div class="column full" >
+            <div class="form-group">
+                <div class="row clearfix">
+                    <div class="input-group column full">
+                        <input type="text" id="timerDescription" class="form-control" placeholder="Description" ng-model="description">
+                    </div>
                 </div>
-            </div>
-            <div class="row clearfix">
-                <div class="input-group column third">
-                    <input type="text" id="timerHours" class="form-control" placeholder="Hours" name="timerHours">
+                <div class="row clearfix">
+                    <div class="input-group column third">
+                        <input type="text" id="timerHours" class="form-control" placeholder="Hours" ng-model="hours">
+                    </div>
+                    <div class="input-group column third">
+                        <input type="text" id="timerMinutes" class="form-control" placeholder="Mins" ng-model="minutes">
+                    </div>
+                    <div class="input-group column third">
+                        <input type="text" id="timerSeconds" class="form-control" placeholder="secs" ng-model="seconds">
+                    </div>
                 </div>
-                <div class="input-group column third">
-                    <input type="text" id="timerMinutes" class="form-control" placeholder="Mins" name="timerMinutes">
+                <div class="row clearfix">
+                    <div class="dropdown column half" ng-controller="CategoryController">
+                        <select name="category" class="wide" ng-model="selectedCategory">
+                            <option ng-repeat="category in categories" value="{{category.categoryId}}">{{category.categoryName}}</option>
+                        </select>
+                    </div>
+                    <div class="input-group column half">
+                        <input type="date" id="timerDate" ng-model="date">
+                    </div>
                 </div>
-                <div class="input-group column third">
-                    <input type="text" id="timerSeconds" class="form-control" placeholder="secs" name="timerSeconds">
+                <div class="row clearfix" ng-controller="ProjectsTasksController">
+                    <div class="dropdown column half" >
+                        <select name="project" class="wide" ng-model="selectedProject" ng-change="loadTasks()">
+                            <option ng-repeat="project in projects" value="{{project.projectId}}">{{project.projectName}}</option>
+                        </select>
+                    </div>
+                    <div class="dropdown column half">
+                        <select name="task" class="wide" ng-model="selectedTask">
+                            <option ng-repeat="task in tasks" value="{{task.taskId}}">{{task.taskName}}</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="row clearfix">
-                <div class="dropdown column half" ng-controller="CategoryController">
-                    <select name="category" class="wide" ng-model="selectedCategory">
-                        <option ng-repeat="category in categories" value="{{category.categoryId}}">{{category.categoryName}}</option>
-                    </select>
-                </div>
-                <div class="input-group column half">
-                    <input type="date" id="timerDate" name="timerDate">
-                </div>
-            </div>
-            <div class="row clearfix" ng-controller="ProjectsTasksController">
-                <div class="dropdown column half" >
-                    <select name="project" class="wide" ng-model="selectedProject" ng-change="loadTasks()">
-                        <option ng-repeat="project in projects" value="{{project.projectId}}">{{project.projectName}}</option>
-                    </select>
-                </div>
-                <div class="dropdown column half">
-                    <select name="task" class="wide" ng-model="selectedTask">
-                        <option ng-repeat="task in tasks" value="{{task.taskId}}">{{task.taskName}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row clearfix">
-                <div class="input-group column full">
-                    <input type="submit" value="Add Timer" class="btn btn-primary">
-                    <div class="checkbox checkbox-inline">
-                        <input type="checkbox" id="timerBillable"  name="timerBillable">
-                        <label for="timerBillable">Billable</label>
+                <div class="row clearfix">
+                    <div class="input-group column full">
+                        <input type="submit" value="Add Timer" class="btn btn-primary">
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" id="timerBillable"  ng-model="billable">
+                            <label for="timerBillable">Billable</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 </body>
 </html>
