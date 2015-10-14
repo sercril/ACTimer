@@ -1,6 +1,6 @@
 
 
-angular.module('actimer', [])
+angular.module('actimer', ["services"])
         .factory('ProjectsHelper', ['$http', function($http){
             return {
                 
