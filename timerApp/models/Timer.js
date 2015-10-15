@@ -7,7 +7,7 @@ var TimerSchema = new mongoose.Schema({
     description: String,
     category: String,
     date: {type: Date, default: Date.now()},
-    task: String
+    task: Number
 });
 
 

@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="stylesheets/style.css">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="javascripts/timer.js"></script>
+    <script src="javascripts/services.js"></script>
     <script src="javascripts/ACTimer.js"></script>
 </head>
 <body>
@@ -51,7 +53,7 @@
                         </select>
                     </div>
                     <div class="dropdown column half">
-                        <select name="task" class="wide" ng-model="selectedTask">
+                        <select name="task" class="wide" ng-model="selectedTask" ng-change="changeTask()">
                             <option ng-repeat="task in tasks" value="{{task.taskId}}">{{task.taskName}}</option>
                         </select>
                     </div>

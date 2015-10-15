@@ -1,2 +1,2 @@
 angular.module('services', [])
-    .service('Timer', ['$http',Timer]);
+    .service('Timer', [Timer]);

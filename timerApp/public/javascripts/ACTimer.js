@@ -31,6 +31,8 @@ angular.module('actimer', ["services"])
                 });
             };
 
+
+
             $scope.loadProjects();
         }])
         .factory('CategoryHelper', ['$http', function($http){
@@ -44,18 +46,21 @@ angular.module('actimer', ["services"])
             });
             
         }])
-        .factory("Timer", ['$http', function($request){
+        //.factory("Timer", ['$http', function($request){
+        //
+        //    return {
+        //        Add: function(newTimer) {
+        //            return $http.post(
+        //                "http://localhost:3000/timers",
+        //                newTimer
+        //            );
+        //        }
+        //    };
+        //}])
+        .controller("TimerFormController", ['$scope',  "$http", function($scope, $http){
 
-            return {
-                Add: function(newTimer) {
-                    return $http.post(
-                        "http://localhost:3000/timers",
-                        newTimer
-                    );
-                }
-            };
-        }])
-        .controller("TimerFormController", ['$scope', "Timer", function($scope, Timer){
+
+
 
             function validate()
             {
