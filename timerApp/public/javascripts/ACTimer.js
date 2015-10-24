@@ -1,4 +1,4 @@
-
+var CurrentTimer = new Timer();
 
 angular.module('actimer', ["services"])
         .factory('ProjectsHelper', ['$http', function($http){
@@ -31,6 +31,10 @@ angular.module('actimer', ["services"])
                 });
             };
 
+            $scope.changeTask = function() {
+                CurrentTimer.properties.task = $scope.selectedTask;
+            };
+
 
 
             $scope.loadProjects();
@@ -44,6 +48,10 @@ angular.module('actimer', ["services"])
             }).error(function(data, status){
                 $scope.categories = [];
             });
+
+            $scope.changeCategory = function() {
+                CurrentTimer.properties.category = $scope.selectedCategory;
+            };
             
         }])
         //.factory("Timer", ['$http', function($request){
@@ -82,31 +90,19 @@ angular.module('actimer', ["services"])
 
                 newTimer = {
                     description: $scope.description,
-                    category: $scope.selectedCategory,
                     date: $scope.date,
-                    task: $scope.selectedTask,
                     elapsedTime: time,
                     billable: $scope.billable
                 };
 
-                console.log(newTimer);
+                jQuery.extend(CurrentTimer.properties, newTimer);
 
-                return;
+                CurrentTimer.save();
+
 
                 if(validate())
                 {
-                    newTimer = {
-                        description: $scope.description,
-                        category: $scope.selectedCategory,
-                        date: $scope.date,
-                        task: $scope.selectedTask,
-                        elapsedTime: time,
-                        billable: $scope.billable
-                    };
 
-                    console.log(newTimer);
-
-                    //Timer.Add()
                 }
                 else
                 {

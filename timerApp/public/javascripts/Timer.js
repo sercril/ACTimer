@@ -1,4 +1,6 @@
-function Timer(request, props) {
+var request = require("request");
+
+function Timer(props) {
 
     this.properties = {
         elapsedTime: 0,
@@ -9,7 +11,6 @@ function Timer(request, props) {
         task: 0
     };
 
-    this.request = request;
 
     if (typeof props !== "undefined")
     {
@@ -22,10 +23,10 @@ Timer.prototype = {
     constructor: Timer,
 
     load: function(timerId){
-        this.request({
-            method: "post",
+        request({
+            method: "get",
             url:"http://localhost:3000/timers",
-            data: this.properties
+            data: timerId
         })
         .success(function(data){
             console.log("Timer Added!");
@@ -37,7 +38,7 @@ Timer.prototype = {
 
     save: function()
     {
-        this.request({
+        request({
             method: "post",
             url:"http://localhost:3000/timers",
             data: this.properties

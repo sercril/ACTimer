@@ -92,9 +92,6 @@ router.get('/:id', function(req, res, next) {
                 res.json("Done");
             }
         });
-
-
-
     }
     else
     {

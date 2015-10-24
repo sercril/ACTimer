@@ -38,7 +38,7 @@
                 </div>
                 <div class="row clearfix">
                     <div class="dropdown column half" ng-controller="CategoryController">
-                        <select name="category" class="wide" ng-model="selectedCategory">
+                        <select name="category" class="wide" ng-model="selectedCategory" ng-change="changeCategory()">
                             <option ng-repeat="category in categories" value="{{category.categoryId}}">{{category.categoryName}}</option>
                         </select>
                     </div>
