@@ -98,4 +98,13 @@ angular.module('actimer', ['ngResource',"services"])
                     console.log("Invalid Input");
                 }
             };
+        }])
+        .controller("TimerListController", ['$scope', "Resource", function($scope, Resource){
+
+            $scope.loadTimers = function(){
+                $scope.timers = Resource.get();
+            };
+
+
+
         }]);

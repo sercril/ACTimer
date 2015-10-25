@@ -17,10 +17,7 @@ function Timer(props) {
 }
 
 Timer.prototype = {
-
     constructor: Timer
-
-
 };
 
 
