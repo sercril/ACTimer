@@ -1,5 +1,3 @@
-var request = require("request");
-
 function Timer(props) {
 
     this.properties = {
@@ -20,36 +18,9 @@ function Timer(props) {
 
 Timer.prototype = {
 
-    constructor: Timer,
+    constructor: Timer
 
-    load: function(timerId){
-        request({
-            method: "get",
-            url:"http://localhost:3000/timers",
-            data: timerId
-        })
-        .success(function(data){
-            console.log("Timer Added!");
-        })
-        .error(function(data, status){
-            console.log("Timer Failed!");
-        });
-    },
 
-    save: function()
-    {
-        request({
-            method: "post",
-            url:"http://localhost:3000/timers",
-            data: this.properties
-        })
-        .success(function(data){
-            console.log("Timer Added!");
-        })
-        .error(function(data, status){
-            console.log("Timer Failed!");
-        });
-    }
 };
 
 

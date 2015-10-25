@@ -1,6 +1,9 @@
-var CurrentTimer = new Timer();
+var CurrentTimer = new Timer(null);
 
-angular.module('actimer', ["services"])
+angular.module('actimer', ['ngResource',"services"])
+        .factory('Resource',["$resource", function($resource){
+            return $resource("http://localhost:3000/timers/:id", {id:"@_id"}, null);
+        }])
         .factory('ProjectsHelper', ['$http', function($http){
             return {
                 
@@ -54,29 +57,18 @@ angular.module('actimer', ["services"])
             };
             
         }])
-        //.factory("Timer", ['$http', function($request){
-        //
-        //    return {
-        //        Add: function(newTimer) {
-        //            return $http.post(
-        //                "http://localhost:3000/timers",
-        //                newTimer
-        //            );
-        //        }
-        //    };
-        //}])
-        .controller("TimerFormController", ['$scope',  "$http", function($scope, $http){
-
-
-
+        .controller("TimerFormController", ['$scope', "$http", "Resource", function($scope, $http, Resource){
 
             function validate()
             {
                 var numReg = /[0-9]/;
                 return ($scope.description !== ""
+                        && $scope.date !== null
                         && numReg.test($scope.hours)
                         && numReg.test($scope.minutes)
-                        && numReg.test($scope.seconds));
+                        && numReg.test($scope.seconds)
+                        && CurrentTimer.properties.task > 0
+                        && CurrentTimer.properties.category > 0);
             }
 
             function convertTime()
@@ -97,17 +89,13 @@ angular.module('actimer', ["services"])
 
                 jQuery.extend(CurrentTimer.properties, newTimer);
 
-                CurrentTimer.save();
-
-
                 if(validate())
                 {
-
+                    Resource.save(CurrentTimer.properties);
                 }
                 else
                 {
                     console.log("Invalid Input");
                 }
             };
-
         }]);
