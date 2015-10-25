@@ -90,3 +90,13 @@ select.wide {
   padding: 8px 5px;
   font-size: 16px;
 }
+.timers {
+  padding: 0 9em;
+}
+.timers .well div {
+  display: inline-block;
+  text-align: center;
+}
+div.fa {
+  width: 1%;
+}
