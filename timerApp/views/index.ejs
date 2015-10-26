@@ -72,27 +72,27 @@
         </div>
     </div>
 </form>
-<div class="timers">
-    <div class="well">
+<div class="timers" ng-controller="TimerListController">
+    <div class="well" ng-repeat="timer in timers">
         <div class="fa fa-play">
         </div>
         <div>
-            {task}
+            {{timer.task}}
         </div>
         <div>
-            {description}
+            {{timer.description}}
         </div>
         <div>
-            {date}
+            {{timer.date}}
         </div>
         <div>
-            {category}
+            {{timer.category}}
         </div>
         <div>
-            {time}
+            {{timer.elapsedTime}}
         </div>
         <div>
-            {billable}
+            {{timer.billable}}
         </div>
         <div class="fa fa-pencil">
         </div>

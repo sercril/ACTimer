@@ -2,7 +2,7 @@ var CurrentTimer = new Timer(null);
 
 angular.module('actimer', ['ngResource',"services"])
         .factory('Resource',["$resource", function($resource){
-            return $resource("http://localhost:3000/timers/:id", {id:"@_id"}, null);
+            return $resource("http://localhost:3000/timers", {}, null);
         }])
         .factory('ProjectsHelper', ['$http', function($http){
             return {
@@ -57,7 +57,7 @@ angular.module('actimer', ['ngResource',"services"])
             };
             
         }])
-        .controller("TimerFormController", ['$scope', "$http", "Resource", function($scope, $http, Resource){
+        .controller("TimerFormController", ['$scope', "Resource", function($scope, Resource){
 
             function validate()
             {
@@ -102,9 +102,22 @@ angular.module('actimer', ['ngResource',"services"])
         .controller("TimerListController", ['$scope', "Resource", function($scope, Resource){
 
             $scope.loadTimers = function(){
-                $scope.timers = Resource.get();
+
+
+                Resource.query(function(timers){
+                    $scope.timers = timers;
+                });
+
             };
 
+            function formatTimer(timerToFormat)
+            {
+                //Get Category by ID
+                //Get Task by ID
+                //Change Date into m/d/Y format
+                //Change billable to say Not billable/billable
+            }
 
+            $scope.loadTimers();
 
         }]);
