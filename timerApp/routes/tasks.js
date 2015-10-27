@@ -95,7 +95,7 @@ router.get('/:id', function(req, res, next) {
     }
     else
     {
-        Task.findById(req.params.id,function(err, post) {
+        Task.findOne({'taskId':req.params.id},function(err, post) {
             if(err)
             {
                 return next(err);

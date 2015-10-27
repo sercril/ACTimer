@@ -95,20 +95,48 @@ angular.module('actimer', ['ngResource',"services"])
 
             $scope.loadTimers = function(){
 
+                function parseTimer(timeString)
+                {
+
+
+                    return timeString;
+                }
+
+                function formatTimer(timerToFormat)
+                {
+                    //Get Category by ID
+                    Categories.get({id:timerToFormat.category},function(category){
+                        timerToFormat.categoryId = timerToFormat.category;
+                        timerToFormat.category = category.categoryName;
+                    });
+                    //Get Task by ID
+                    Tasks.get({id:timerToFormat.task},function(task){
+                        timerToFormat.taskId = timerToFormat.task;
+                        timerToFormat.task = task.taskName;
+                    });
+                    //Change Date into m/d/Y format
+
+
+                    //Parse Time
+                    timerToFormat.totalSeconds = timerToFormat.elapsedTime;
+                    timerToFormat.elapsedTime = parseTimer(timerToFormat.elapsedTime);
+                    //Change billable to say Not billable/billable
+                    timerToFormat.billable = (timerToFormat.billable) ? "Billable":"Not Billable";
+
+                    return timerToFormat;
+                }
 
                 Timer.query(function(timers){
+                    timers.forEach(function(timer){
+                        timer = formatTimer(timer);
+                    });
+
                     $scope.timers = timers;
                 });
 
             };
 
-            function formatTimer(timerToFormat)
-            {
-                //Get Category by ID
-                //Get Task by ID
-                //Change Date into m/d/Y format
-                //Change billable to say Not billable/billable
-            }
+
 
             $scope.loadTimers();
 
