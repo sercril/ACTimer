@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-    Category.findById(req.params.id,function(err, post) {
+    Category.findOne({'categoryId': req.params.id},function(err, post) {
         if(err)
         {
             return next(err);

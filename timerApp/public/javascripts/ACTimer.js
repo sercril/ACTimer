@@ -1,36 +1,32 @@
 var CurrentTimer = new Timer(null);
 
 angular.module('actimer', ['ngResource',"services"])
-        .factory('Resource',["$resource", function($resource){
-            return $resource("http://localhost:3000/timers", {}, null);
+        .factory('Timer',["$resource", function($resource){
+            return $resource("http://localhost:3000/timers/:id", {}, null);
         }])
-        .factory('ProjectsHelper', ['$http', function($http){
-            return {
-                
-                GetProjects: function(){
-                    return $http.get('/projects');
-                },
-                GetTasks: function(projectId){
-                    return $http.get('/tasks/project/'+projectId);
-                } 
-            };
+        .factory('Projects',["$resource", function($resource){
+            return $resource("http://localhost:3000/projects", {}, null);
         }])
-        .controller('ProjectsTasksController', ['$scope', 'ProjectsHelper', function($scope, ProjectsHelper){
-           
+        .factory('Tasks',["$resource", function($resource){
+            return $resource("http://localhost:3000/tasks/:id", {}, null);
+        }])
+        .factory('ProjectTasks',["$resource", function($resource){
+            return $resource("http://localhost:3000/tasks/project/:id", {}, null);
+        }])
+        .factory('Categories',["$resource", function($resource){
+            return $resource("http://localhost:3000/category/:id", {}, null);
+        }])
+        .controller('ProjectsTasksController', ['$scope', 'ProjectTasks', 'Projects', function($scope, ProjectTasks, Projects){
 
             $scope.loadTasks = function(){
-                ProjectsHelper.GetTasks($scope.selectedProject).success(function(data){
-                    $scope.tasks = data;
-                }).error(function(data, status){
-                    $scope.tasks = [];
+                ProjectTasks.query({id:$scope.selectedProject},function(projects){
+                    $scope.tasks = projects;
                 });
             };
-          
+
             $scope.loadProjects = function(){
-                ProjectsHelper.GetProjects().success(function(data){
-                    $scope.projects = data;
-                }).error(function(data, status){
-                    $scope.projects = [];
+                Projects.query(function(projects){
+                    $scope.projects = projects;
                 });
             };
 
@@ -42,14 +38,10 @@ angular.module('actimer', ['ngResource',"services"])
 
             $scope.loadProjects();
         }])
-        .factory('CategoryHelper', ['$http', function($http){
-            return $http.get('/category');
-        }])
-        .controller('CategoryController', ['$scope', 'CategoryHelper', function($scope, CategoryHelper){
-            CategoryHelper.success(function(data){
+        .controller('CategoryController', ['$scope', 'Categories', function($scope, Categories){
+
+            Categories.query(function(data){
                 $scope.categories = data;
-            }).error(function(data, status){
-                $scope.categories = [];
             });
 
             $scope.changeCategory = function() {
@@ -57,7 +49,7 @@ angular.module('actimer', ['ngResource',"services"])
             };
             
         }])
-        .controller("TimerFormController", ['$scope', "Resource", function($scope, Resource){
+        .controller("TimerFormController", ['$scope', "Timer", function($scope, Timer){
 
             function validate()
             {
@@ -91,7 +83,7 @@ angular.module('actimer', ['ngResource',"services"])
 
                 if(validate())
                 {
-                    Resource.save(CurrentTimer.properties);
+                    Timer.save(CurrentTimer.properties);
                 }
                 else
                 {
@@ -99,12 +91,12 @@ angular.module('actimer', ['ngResource',"services"])
                 }
             };
         }])
-        .controller("TimerListController", ['$scope', "Resource", function($scope, Resource){
+        .controller("TimerListController", ['$scope', "Timer", "Tasks", "Categories", function($scope, Timer, Tasks, Categories){
 
             $scope.loadTimers = function(){
 
 
-                Resource.query(function(timers){
+                Timer.query(function(timers){
                     $scope.timers = timers;
                 });
 
