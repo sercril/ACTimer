@@ -22,6 +22,7 @@
     "request": "^2.61.0",
     "serve-favicon": "~2.3.0",
     "should": "^7.1.1",
+    "should-http": "0.0.4",
     "supertest": "^1.1.0",
     "winston": "^2.1.0"
   },
