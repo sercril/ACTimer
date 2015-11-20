@@ -5,13 +5,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
     <link rel="stylesheet" href="stylesheets/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/font-awesome-4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="stylesheets/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" href="stylesheets/style.css">
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-resource.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-resource.min.js"></script>
+    <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="javascripts/front-main.js"></script>
     <script src="javascripts/Timer.js"></script>
     <script src="javascripts/services.js"></script>
     <script src="javascripts/ACTimer.js"></script>
@@ -31,10 +36,10 @@
                         <input type="text" id="timerHours" class="form-control" placeholder="Hours" ng-model="hours">
                     </div>
                     <div class="input-group column third">
-                        <input type="text" id="timerMinutes" class="form-control" placeholder="Mins" ng-model="minutes">
+                        <input type="text" id="timerMinutes" class="form-control" placeholder="Minutes" ng-model="minutes">
                     </div>
                     <div class="input-group column third">
-                        <input type="text" id="timerSeconds" class="form-control" placeholder="secs" ng-model="seconds">
+                        <input type="text" id="timerSeconds" class="form-control" placeholder="Seconds" ng-model="seconds">
                     </div>
                 </div>
                 <div class="row clearfix">
@@ -43,8 +48,14 @@
                             <option ng-repeat="category in categories" value="{{category.categoryId}}">{{category.categoryName}}</option>
                         </select>
                     </div>
-                    <div class="input-group column half">
-                        <input type="date" id="timerDate" ng-model="date">
+                    <!--<div class="input-group column half">-->
+                    <!--<input type="date" id="timerDate" ng-model="date">-->
+                    <!--</div>-->
+                    <div class='input-group date column half'>
+                        <input type='text' class="form-control" id="timerDate" ng-model="date" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
                     </div>
                 </div>
                 <div class="row clearfix" ng-controller="ProjectsTasksController">

@@ -86,7 +86,7 @@ angular.module('actimer', ['ngResource',"services"])
                     elapsedTime: time,
                     billable: $scope.billable
                 };
-
+                console.log(newTimer);
 
                 jQuery.extend(CurrentTimer.properties, newTimer);
 
