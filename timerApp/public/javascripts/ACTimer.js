@@ -2,19 +2,19 @@ var CurrentTimer = new Timer(null);
 
 angular.module('actimer', ['ngResource',"services"])
         .factory('Timer',["$resource", function($resource){
-            return $resource("http://localhost:3000/timers/:id", {}, null);
+            return $resource("http://localhost/timers/:id", {}, null);
         }])
         .factory('Projects',["$resource", function($resource){
-            return $resource("http://localhost:3000/projects", {}, null);
+            return $resource("http://localhost/projects", {}, null);
         }])
         .factory('Tasks',["$resource", function($resource){
-            return $resource("http://localhost:3000/tasks/:id", {}, null);
+            return $resource("http://localhost/tasks/:id", {}, null);
         }])
         .factory('ProjectTasks',["$resource", function($resource){
-            return $resource("http://localhost:3000/tasks/project/:id", {}, null);
+            return $resource("http://localhost/tasks/project/:id", {}, null);
         }])
         .factory('Categories',["$resource", function($resource){
-            return $resource("http://localhost:3000/category/:id", {}, null);
+            return $resource("http://localhost/category/:id", {}, null);
         }])
         .controller('ProjectsTasksController', ['$scope', 'ProjectTasks', 'Projects', function($scope, ProjectTasks, Projects){
 
@@ -49,7 +49,7 @@ angular.module('actimer', ['ngResource',"services"])
             };
             
         }])
-        .controller("TimerFormController", ['$scope', "Timer", function($scope, Timer){
+        .controller("TimerFormController", ['$scope', '$rootScope',  "Timer", function($scope, $rootScope,  Timer){
 
             function validate()
             {
@@ -61,6 +61,14 @@ angular.module('actimer', ['ngResource',"services"])
                         && numReg.test($scope.seconds)
                         && CurrentTimer.properties.task > 0
                         && CurrentTimer.properties.category > 0);
+            }
+
+            function clearInput()
+            {
+                $scope.hours = "";
+                $scope.minutes = "";
+                $scope.seconds = "";
+                $scope.description = "";
             }
 
             function convertTime()
@@ -79,11 +87,14 @@ angular.module('actimer', ['ngResource',"services"])
                     billable: $scope.billable
                 };
 
+
                 jQuery.extend(CurrentTimer.properties, newTimer);
 
                 if(validate())
                 {
                     Timer.save(CurrentTimer.properties);
+                    clearInput();
+                    $rootScope.$emit('update-list', {}  );
                 }
                 else
                 {
@@ -91,7 +102,7 @@ angular.module('actimer', ['ngResource',"services"])
                 }
             };
         }])
-        .controller("TimerListController", ['$scope', "Timer", "Tasks", "Categories", function($scope, Timer, Tasks, Categories){
+        .controller("TimerListController", ['$scope', '$rootScope', "Timer", "Tasks", "Categories", function($scope, $rootScope, Timer, Tasks, Categories){
 
             $scope.loadTimers = function(){
 
@@ -136,7 +147,9 @@ angular.module('actimer', ['ngResource',"services"])
 
             };
 
-
+            $rootScope.$on('update-list', function(event, obj){
+                $scope.loadTimers();
+            });
 
             $scope.loadTimers();
 
