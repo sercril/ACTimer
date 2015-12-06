@@ -51,6 +51,8 @@ angular.module('actimer', ['ngResource',"services"])
         }])
         .controller("TimerFormController", ['$scope', '$rootScope',  "Timer", function($scope, $rootScope,  Timer){
 
+
+            $scope.parent = {timerDate:''};
             function validate()
             {
                 var numReg = /[0-9]/;
@@ -82,13 +84,15 @@ angular.module('actimer', ['ngResource',"services"])
 
                 newTimer = {
                     description: $scope.description,
-                    date: $scope.date,
+                    date: $scope.parent.timerDate,
                     elapsedTime: time,
                     billable: $scope.billable
                 };
                 console.log(newTimer);
 
                 jQuery.extend(CurrentTimer.properties, newTimer);
+
+                return;
 
                 if(validate())
                 {
