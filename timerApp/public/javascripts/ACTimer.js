@@ -2,19 +2,19 @@ var CurrentTimer = new Timer(null);
 
 angular.module('actimer', ['ngResource',"services"])
         .factory('Timer',["$resource", function($resource){
-            return $resource("http://localhost/timers/:id", {}, null);
+            return $resource("http://actimer.dev/timers/:id", {}, null);
         }])
         .factory('Projects',["$resource", function($resource){
-            return $resource("http://localhost/projects", {}, null);
+            return $resource("http://actimer.dev/projects", {}, null);
         }])
         .factory('Tasks',["$resource", function($resource){
-            return $resource("http://localhost/tasks/:id", {}, null);
+            return $resource("http://actimer.dev/tasks/:id", {}, null);
         }])
         .factory('ProjectTasks',["$resource", function($resource){
-            return $resource("http://localhost/tasks/project/:id", {}, null);
+            return $resource("http://actimer.dev/tasks/project/:id", {}, null);
         }])
         .factory('Categories',["$resource", function($resource){
-            return $resource("http://localhost/category/:id", {}, null);
+            return $resource("http://actimer.dev/category/:id", {}, null);
         }])
         .controller('ProjectsTasksController', ['$scope', 'ProjectTasks', 'Projects', function($scope, ProjectTasks, Projects){
 
@@ -56,10 +56,17 @@ angular.module('actimer', ['ngResource',"services"])
             function validate()
             {
                 var numReg = /[0-9]/;
+                if(!numReg.test($scope.hours))
+                {
+                    $scope.hours = 0;
+                }
+                if(!numReg.test($scope.minutes))
+                {
+                    $scope.minutes = 0;
+                }
+
                 return ($scope.description !== ""
-                        && $scope.date !== null
-                        && numReg.test($scope.hours)
-                        && numReg.test($scope.minutes)
+                        && $scope.timerDate !== null
                         && numReg.test($scope.seconds)
                         && CurrentTimer.properties.task > 0
                         && CurrentTimer.properties.category > 0);
@@ -96,6 +103,16 @@ angular.module('actimer', ['ngResource',"services"])
 
                 if(validate())
                 {
+                    time = convertTime();
+                    newTimer = {
+                        description: $scope.description,
+                        date: $scope.timerDate,
+                        elapsedTime: time,
+                        billable: $scope.billable
+                    };
+
+                    jQuery.extend(CurrentTimer.properties, newTimer);
+                    console.log($scope.timerDate);
                     Timer.save(CurrentTimer.properties);
                     clearInput();
                     $rootScope.$emit('update-list', {}  );
