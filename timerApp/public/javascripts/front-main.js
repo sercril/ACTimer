@@ -1,5 +1,3 @@
 $(function () {
-    $('.date').datetimepicker({
-        format:"MM/DD/YYYY"
-    });
+    $('#timerDate').datepicker();
 });

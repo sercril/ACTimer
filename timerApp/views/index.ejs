@@ -9,17 +9,19 @@
     <link rel="stylesheet" href="stylesheets/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/font-awesome-4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="stylesheets/awesome-bootstrap-checkbox.css">
+    <link rel="stylesheet" href="jquery-ui/themes/base/all.css">
     <link rel="stylesheet" href="stylesheets/style.css">
+    <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="stylesheets/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-resource.min.js"></script>
-    <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="moment/min/moment.min.js"></script>
-    <script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="javascripts/front-main.js"></script>
-    <script src="javascripts/Timer.js"></script>
-    <script src="javascripts/services.js"></script>
-    <script src="javascripts/ACTimer.js"></script>
+    <script type="text/javascript" src="javascripts/front-main.js"></script>
+    <script type="text/javascript" src="javascripts/Timer.js"></script>
+    <script type="text/javascript" src="javascripts/services.js"></script>
+    <script type="text/javascript" src="javascripts/ACTimer.js"></script>
 </head>
 <body>
 <form ng-submit="submit()" ng-controller="TimerFormController">
@@ -53,10 +55,7 @@
                     <!--</div>-->
 
                     <div class='input-group date column half'>
-                        <input type='text' class="form-control" id="timerDate" ng-model="timerDate" value="" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+                        <input type='text' class="form-control" id="timerDate" placeholder="Date" ng-model="timerDate" />
                     </div>
                 </div>
                 <div class="row clearfix" ng-controller="ProjectsTasksController">
