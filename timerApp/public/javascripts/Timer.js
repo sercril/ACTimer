@@ -1,4 +1,4 @@
-function Timer(props) {
+function ACTimer(props) {
 
     this.properties = {
         elapsedTime: 0,
@@ -16,8 +16,8 @@ function Timer(props) {
     }
 }
 
-Timer.prototype = {
-    constructor: Timer
+ACTimer.prototype = {
+    constructor: ACTimer
 };
 
 

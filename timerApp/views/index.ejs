@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
     <link rel="stylesheet" href="stylesheets/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/font-awesome-4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="stylesheets/awesome-bootstrap-checkbox.css">
@@ -14,10 +13,12 @@
     <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="moment/min/locales.min.js"></script>
+    <script type="text/javascript" src="humanize-duration/humanize-duration.js"></script>
     <script type="text/javascript" src="stylesheets/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-resource.min.js"></script>
+    <script type="text/javascript" src="angular/angular.min.js"></script>
+    <script type="text/javascript" src="angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="angular-timer/dist/angular-timer.min.js"></script>
     <script type="text/javascript" src="javascripts/front-main.js"></script>
     <script type="text/javascript" src="javascripts/Timer.js"></script>
     <script type="text/javascript" src="javascripts/services.js"></script>
@@ -71,12 +72,15 @@
                     </div>
                 </div>
                 <div class="row clearfix">
-                    <div class="input-group column full">
+                    <div class="input-group column half">
                         <input type="submit" value="Add Timer" class="btn btn-primary">
                         <div class="checkbox checkbox-inline">
                             <input type="checkbox" id="timerBillable"  ng-model="billable">
                             <label for="timerBillable">Billable</label>
                         </div>
+                    </div>
+                    <div class="column half">
+                        <a href="#" class="btn btn-primary flow-opposite">Submit Selected</a>
                     </div>
                 </div>
             </div>
@@ -84,30 +88,30 @@
     </div>
 </form>
 <div class="timers" ng-controller="TimerListController">
-    <div class="well" ng-repeat="timer in timers">
-        <div class="fa fa-play">
+    <div class="well" ng-repeat="actimer in actimers">
+        <div class="fa fa-play play">
         </div>
-        <div>
-            {{timer.task}}
+        <div class="task">
+            {{actimer.task}}
         </div>
-        <div>
-            {{timer.description}}
+        <div class="description">
+            {{actimer.description}}
         </div>
-        <div>
-            {{timer.date}}
+        <div class="category">
+            {{actimer.category}}
         </div>
-        <div>
-            {{timer.category}}
+        <div class="date">
+            {{actimer.date}}
         </div>
-        <div>
-            {{timer.elapsedTime}}
+        <div class="elapsed-time">
+            <timer interval="1000" start-time="actimer.elapsedTime" autostart="false">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
         </div>
-        <div>
-            {{timer.billable}}
+        <div class="billable">
+            {{actimer.billable}}
         </div>
-        <div class="fa fa-pencil">
+        <div class="fa fa-pencil edit">
         </div>
-        <div class="fa fa-trash">
+        <div class="fa fa-trash delete">
         </div>
     </div>
 </div>

@@ -1,2 +1,2 @@
 angular.module('services', [])
-    .service('Timer', [Timer]);
+    .service('ACTimer', [ACTimer]);

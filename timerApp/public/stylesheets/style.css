@@ -97,6 +97,27 @@ select.wide {
   display: inline-block;
   text-align: center;
 }
+.timers .well .play,
+.timers .well .edit,
+.timers .well .delete {
+  margin: auto;
+}
+.timers .well .description {
+  text-align: left;
+  width: 45%;
+}
+.timers .well .task {
+  width: 20%;
+}
+.timers .well .category {
+  width: 10%;
+}
+.timers .well .elapsed-time {
+  width: 9%;
+}
+.timers .well .billable {
+  width: 6%;
+}
 div.fa {
   width: 1%;
 }

@@ -1,7 +1,7 @@
-var CurrentTimer = new Timer(null);
+var CurrentTimer = new ACTimer(null);
 
-angular.module('actimer', ['ngResource',"services"])
-        .factory('Timer',["$resource", function($resource){
+angular.module('actimer', ['ngResource',"services", 'timer'])
+        .factory('ACTimer',["$resource", function($resource){
             return $resource("http://actimer.dev/timers/:id", {}, null);
         }])
         .factory('Projects',["$resource", function($resource){
@@ -49,7 +49,7 @@ angular.module('actimer', ['ngResource',"services"])
             };
             
         }])
-        .controller("TimerFormController", ['$scope', '$rootScope',  "Timer", function($scope, $rootScope,  Timer){
+        .controller("TimerFormController", ['$scope', '$rootScope',  "ACTimer", function($scope, $rootScope,  ACTimer){
 
 
 
@@ -101,7 +101,7 @@ angular.module('actimer', ['ngResource',"services"])
 
                     jQuery.extend(CurrentTimer.properties, newTimer);
                     console.log($scope.timerDate);
-                    Timer.save(CurrentTimer.properties);
+                    ACTimer.save(CurrentTimer.properties);
                     clearInput();
                     $rootScope.$emit('update-list', {}  );
                 }
@@ -111,13 +111,15 @@ angular.module('actimer', ['ngResource',"services"])
                 }
             };
         }])
-        .controller("TimerListController", ['$scope', '$rootScope', "Timer", "Tasks", "Categories", function($scope, $rootScope, Timer, Tasks, Categories){
+        .controller("TimerListController", ['$scope', '$rootScope', '$compile', "ACTimer", "Tasks", "Categories", function($scope, $rootScope, $compile, ACTimer, Tasks, Categories){
 
             $scope.loadTimers = function(){
 
                 function parseTimer(timeString)
                 {
-
+                    timeString = moment().startOf('day')
+                        .seconds(parseInt(timeString))
+                        .format('H:mm:ss');
 
                     return timeString;
                 }
@@ -135,26 +137,27 @@ angular.module('actimer', ['ngResource',"services"])
                         timerToFormat.task = task.taskName;
                     });
                     //Change Date into m/d/Y format
-
+                    timerToFormat.date = moment(timerToFormat.date).format('MM/DD/YYYY');
 
                     //Parse Time
                     timerToFormat.totalSeconds = timerToFormat.elapsedTime;
-                    timerToFormat.elapsedTime = parseTimer(timerToFormat.elapsedTime);
+                    timerToFormat.elapsedTime *= 1000;
                     //Change billable to say Not billable/billable
                     timerToFormat.billable = (timerToFormat.billable) ? "Billable":"Not Billable";
 
                     return timerToFormat;
                 }
 
-                Timer.query(function(timers){
-                    timers.forEach(function(timer){
-                        timer = formatTimer(timer);
+                ACTimer.query(function(actimers){
+                    actimers.forEach(function(t){
+                        t = formatTimer(t);
                     });
-
-                    $scope.timers = timers;
+                    console.log(actimers);
+                    $scope.actimers = actimers;
                 });
 
             };
+
 
             $rootScope.$on('update-list', function(event, obj){
                 $scope.loadTimers();
