@@ -152,7 +152,7 @@ angular.module('actimer', ['ngResource',"services", 'timer'])
                     actimers.forEach(function(t){
                         t = formatTimer(t);
                     });
-                    console.log(actimers);
+
                     $scope.actimers = actimers;
                 });
 
