@@ -1,6 +1,6 @@
 var CurrentTimer = new ACTimer(null);
 
-angular.module('actimer', ['ngResource',"services", 'timer'])
+angular.module('actimer', ['ngResource',"services"])
         .factory('ACTimer',["$resource", function($resource){
             return $resource("http://actimer.dev/timers/:id", {}, null);
         }])
@@ -141,9 +141,10 @@ angular.module('actimer', ['ngResource',"services", 'timer'])
 
                     //Parse Time
                     timerToFormat.totalSeconds = timerToFormat.elapsedTime;
-                    timerToFormat.elapsedTime *= 1000;
                     //Change billable to say Not billable/billable
                     timerToFormat.billable = (timerToFormat.billable) ? "Billable":"Not Billable";
+
+                    timerToFormat.active = false;
 
                     return timerToFormat;
                 }
@@ -152,15 +153,54 @@ angular.module('actimer', ['ngResource',"services", 'timer'])
                     actimers.forEach(function(t){
                         t = formatTimer(t);
                     });
-                    console.log(actimers);
                     $scope.actimers = actimers;
                 });
 
             };
 
+            function incrementTimer(timer)
+            {
+                timer.elapsedTime += 1;
+            }
+
+            $scope.startTimer = function(timer) {
+                timer.active = true;
+                console.log(timer);
+            };
+
+            $scope.stopTimer = function(timer) {
+                timer.active = false;
+                console.log(timer);
+            };
+
+
+            $scope.toggleTimer = function(timer) {
+                if(true === timer.active)
+                {
+                    $rootScope.$emit('stop-timer', timer);
+                }
+                else if(false === timer.active)
+                {
+                    $rootScope.$emit('start-timer', timer);
+                }
+
+            };
+
+
+
+            var iTimer = $interval(incrementTimer, 1000);
+
 
             $rootScope.$on('update-list', function(event, obj){
                 $scope.loadTimers();
+            });
+
+            $rootScope.$on('start-timer', function(event, obj){
+                $scope.startTimer(obj);
+            });
+
+            $rootScope.$on('stop-timer', function(event, obj){
+                $scope.stopTimer(obj);
             });
 
             $scope.loadTimers();

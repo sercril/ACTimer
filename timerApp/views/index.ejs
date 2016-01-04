@@ -18,7 +18,6 @@
     <script type="text/javascript" src="stylesheets/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="angular/angular.min.js"></script>
     <script type="text/javascript" src="angular-resource/angular-resource.min.js"></script>
-    <script type="text/javascript" src="angular-timer/dist/angular-timer.min.js"></script>
     <script type="text/javascript" src="javascripts/front-main.js"></script>
     <script type="text/javascript" src="javascripts/Timer.js"></script>
     <script type="text/javascript" src="javascripts/services.js"></script>
@@ -89,7 +88,7 @@
 </form>
 <div class="timers" ng-controller="TimerListController">
     <div class="well" ng-repeat="actimer in actimers">
-        <div class="fa fa-play play">
+        <div class="fa fa-play play" ng-click="toggleTimer(actimer)">
         </div>
         <div class="task">
             {{actimer.task}}
@@ -104,7 +103,7 @@
             {{actimer.date}}
         </div>
         <div class="elapsed-time">
-            <timer interval="1000" start-time="actimer.elapsedTime" autostart="false">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+            {{actimer.elapsedTime}}
         </div>
         <div class="billable">
             {{actimer.billable}}
