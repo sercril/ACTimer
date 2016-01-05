@@ -84,7 +84,7 @@
 </form>
 <div class="timers" ng-controller="TimerListController">
     <div class="well" ng-repeat="actimer in actimers">
-        <div class="fa fa-play play" ng-click="toggleTimer(actimer)">
+        <div class="fa fa-play play" ng-class="{ 'fa-play play' : true !== actimer.active, 'fa-pause pause' : true === actimer.active }" ng-click="toggleTimer(actimer)">
         </div>
         <div class="task">
             {{actimer.task}}
@@ -104,9 +104,9 @@
         <div class="billable">
             {{actimer.billable}}
         </div>
-        <div class="fa fa-pencil edit">
+        <div class="fa fa-pencil edit" ng-click="editTimer(actimer)">
         </div>
-        <div class="fa fa-trash delete">
+        <div class="fa fa-trash delete" ng-click="removeTimer(actimer)">
         </div>
     </div>
 </div>

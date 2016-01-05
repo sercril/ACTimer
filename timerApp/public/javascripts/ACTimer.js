@@ -111,18 +111,19 @@ angular.module('actimer', ['ngResource',"services"])
                 }
             };
         }])
-        .controller("TimerListController", ['$scope', '$rootScope', '$compile', "ACTimer", "Tasks", "Categories", function($scope, $rootScope, $compile, ACTimer, Tasks, Categories){
+        .controller("TimerListController", ['$scope', '$rootScope', '$interval', "ACTimer", "Tasks", "Categories", function($scope, $rootScope, $interval, ACTimer, Tasks, Categories){
+
+
+            function parseTimer(timeString)
+            {
+                timeString = moment().startOf('day')
+                    .seconds(parseInt(timeString))
+                    .format('H:mm:ss');
+
+                return timeString;
+            }
 
             $scope.loadTimers = function(){
-
-                function parseTimer(timeString)
-                {
-                    timeString = moment().startOf('day')
-                        .seconds(parseInt(timeString))
-                        .format('H:mm:ss');
-
-                    return timeString;
-                }
 
                 function formatTimer(timerToFormat)
                 {
@@ -141,6 +142,7 @@ angular.module('actimer', ['ngResource',"services"])
 
                     //Parse Time
                     timerToFormat.totalSeconds = timerToFormat.elapsedTime;
+                    timerToFormat.elapsedTime = parseTimer(timerToFormat.totalSeconds);
                     //Change billable to say Not billable/billable
                     timerToFormat.billable = (timerToFormat.billable) ? "Billable":"Not Billable";
 
@@ -158,19 +160,23 @@ angular.module('actimer', ['ngResource',"services"])
 
             };
 
-            function incrementTimer(timer)
+            function incrementTimers()
             {
-                timer.elapsedTime += 1;
+                $scope.actimers.forEach(function(t){
+                    if(true === t.active)
+                    {
+                        t.totalSeconds += 1;
+                        t.elapsedTime = parseTimer(t.totalSeconds);
+                    }
+                });
             }
 
             $scope.startTimer = function(timer) {
                 timer.active = true;
-                console.log(timer);
             };
 
             $scope.stopTimer = function(timer) {
                 timer.active = false;
-                console.log(timer);
             };
 
 
@@ -183,12 +189,13 @@ angular.module('actimer', ['ngResource',"services"])
                 {
                     $rootScope.$emit('start-timer', timer);
                 }
+            };
+
+            $scope.removeTimer = function(timer){
 
             };
 
-
-
-            var iTimer = $interval(incrementTimer, 1000);
+            $interval(incrementTimers, 1000);
 
 
             $rootScope.$on('update-list', function(event, obj){
