@@ -212,4 +212,14 @@ angular.module('actimer', ['ngResource',"services"])
 
             $scope.loadTimers();
 
+        }])
+        .controller("ModalController", ['$scope', '$rootScope', function($scope, $rootScope){
+
+            $scope.active = false;
+
+            $rootScope.$on('display-modal', function(event, obj){
+                $scope.modal = obj;
+                $scope.active = true;
+            });
+
         }]);
