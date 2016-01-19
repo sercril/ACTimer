@@ -101,6 +101,7 @@ select.wide {
 .timers .well .edit,
 .timers .well .delete {
   margin: auto;
+  cursor: pointer;
 }
 .timers .well .description {
   text-align: left;

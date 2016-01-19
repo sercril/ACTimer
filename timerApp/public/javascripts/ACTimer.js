@@ -192,7 +192,16 @@ angular.module('actimer', ['ngResource',"services"])
             };
 
             $scope.removeTimer = function(timer){
+                var delModal = {
+                    title: "Delete Timer",
+                    message: "Are you sure you want to delete "+timer.description,
+                    confirm: "Delete",
+                    cancel: "Cancel",
+                    action: 'delete',
+                    timer: timer
+                };
 
+                $rootScope.$emit('display-modal', delModal);
             };
 
             $interval(incrementTimers, 1000);
@@ -213,13 +222,32 @@ angular.module('actimer', ['ngResource',"services"])
             $scope.loadTimers();
 
         }])
-        .controller("ModalController", ['$scope', '$rootScope', function($scope, $rootScope){
+        .controller("ModalController", ['$scope', '$rootScope', 'ACTimer', function($scope, $rootScope, ACTimer){
 
             $scope.active = false;
+
+            $scope.confirm = function () {
+                switch ($scope.modal.action)
+                {
+                    case 'create':
+                        break;
+                    case 'update':
+                        break;
+                    case 'delete':
+                        ACTimer.delete({id: $scope.modal.timer._id}, function(){});
+                        break;
+                }
+
+                $scope.active = false;
+                $rootScope.$emit('update-list', {});
+            };
 
             $rootScope.$on('display-modal', function(event, obj){
                 $scope.modal = obj;
                 $scope.active = true;
             });
 
+            $scope.close = function(){
+                $scope.active = false;
+            };
         }]);

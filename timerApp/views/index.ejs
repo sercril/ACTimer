@@ -114,15 +114,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&#x274C;</button>
+                <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&#x274C;</button>
                 <h4 class="modal-title">{{modal.title}}</h4>
             </div>
             <div class="modal-body">
                 <p>{{modal.message}}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{modal.cancel}}</button>
-                <button type="button" class="btn btn-primary">{{modal.confirm}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">{{modal.cancel}}</button>
+                <button type="button" class="btn btn-primary" ng-click="confirm()">{{modal.confirm}}</button>
             </div>
         </div>
     </div>
