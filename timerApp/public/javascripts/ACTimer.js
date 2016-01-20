@@ -191,6 +191,18 @@ angular.module('actimer', ['ngResource',"services"])
                 }
             };
 
+            $scope.editTimer = function(timer) {
+                var editModal = {
+                    title: 'Edit Timer',
+                    confirm: 'Save',
+                    cancel: 'Cancel',
+                    action: 'update',
+                    type: 'form',
+                    timer: timer
+                };
+                $rootScope.$emit('display-modal', editModal);
+            };
+
             $scope.removeTimer = function(timer){
                 var delModal = {
                     title: "Delete Timer",
@@ -198,9 +210,9 @@ angular.module('actimer', ['ngResource',"services"])
                     confirm: "Delete",
                     cancel: "Cancel",
                     action: 'delete',
-                    timer: timer
+                    timer: timer,
+                    type: 'message'
                 };
-
                 $rootScope.$emit('display-modal', delModal);
             };
 
@@ -224,7 +236,9 @@ angular.module('actimer', ['ngResource',"services"])
         }])
         .controller("ModalController", ['$scope', '$rootScope', 'ACTimer', function($scope, $rootScope, ACTimer){
 
-            $scope.active = false;
+
+            $scope.message = { active : false };
+            $scope.form = { active : false };
 
             $scope.confirm = function () {
                 switch ($scope.modal.action)
@@ -238,16 +252,31 @@ angular.module('actimer', ['ngResource',"services"])
                         break;
                 }
 
-                $scope.active = false;
+
                 $rootScope.$emit('update-list', {});
             };
 
             $rootScope.$on('display-modal', function(event, obj){
                 $scope.modal = obj;
-                $scope.active = true;
+                if('message' === $scope.modal.type)
+                {
+                    $scope.message.active = true;
+                }
+                else if('form' === $scope.modal.type)
+                {
+                    $scope.form.active = true;
+                }
+
             });
 
             $scope.close = function(){
-                $scope.active = false;
+                if('message' === $scope.modal.type)
+                {
+                    $scope.message.active = false;
+                }
+                else if('form' === $scope.modal.type)
+                {
+                    $scope.form.active = false;
+                }
             };
         }]);

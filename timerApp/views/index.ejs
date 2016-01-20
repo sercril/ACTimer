@@ -110,18 +110,40 @@
         </div>
     </div>
 </div>
-<div class="modal" ng-controller="ModalController" ng-class="{ 'show' : true === active }">
+<div class="modal" ng-controller="ModalController" ng-class="{ 'show' : true === message.active }">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&#x274C;</button>
+                <button type="button" class="close" ng-click="close('message')" data-dismiss="modal" aria-hidden="true">&#x274C;</button>
                 <h4 class="modal-title">{{modal.title}}</h4>
             </div>
             <div class="modal-body">
                 <p>{{modal.message}}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">{{modal.cancel}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close('message')">{{modal.cancel}}</button>
+                <button type="button" class="btn btn-primary" ng-click="confirm()">{{modal.confirm}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" ng-controller="ModalController" ng-class="{ 'show' : true === form.active }">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close('form')" data-dismiss="modal" aria-hidden="true">&#x274C;</button>
+                <h4 class="modal-title">{{modal.title}}</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <fieldset>
+
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close('form')">{{modal.cancel}}</button>
                 <button type="button" class="btn btn-primary" ng-click="confirm()">{{modal.confirm}}</button>
             </div>
         </div>
