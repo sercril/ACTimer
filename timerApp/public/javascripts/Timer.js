@@ -1,6 +1,7 @@
 function ACTimer(props) {
 
     this.properties = {
+        _id: 0,
         elapsedTime: 0,
         billable: false,
         description: "",

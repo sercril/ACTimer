@@ -2,7 +2,7 @@ var CurrentTimer = new ACTimer(null);
 
 angular.module('actimer', ['ngResource',"services"])
         .factory('ACTimer',["$resource", function($resource){
-            return $resource("http://actimer.dev/timers/:id", {}, null);
+            return $resource("http://actimer.dev/timers/:id", null, {'update': {method:'PUT'}});
         }])
         .factory('Projects',["$resource", function($resource){
             return $resource("http://actimer.dev/projects", {}, null);
@@ -89,8 +89,7 @@ angular.module('actimer', ['ngResource',"services"])
 
                 var newTimer, time = convertTime();
 
-                if(validate())
-                {
+                if(validate()) {
                     time = convertTime();
                     newTimer = {
                         description: $scope.description,
@@ -100,8 +99,17 @@ angular.module('actimer', ['ngResource',"services"])
                     };
 
                     jQuery.extend(CurrentTimer.properties, newTimer);
-                    console.log($scope.timerDate);
-                    ACTimer.save(CurrentTimer.properties);
+
+                    if (0 === CurrentTimer.properties._id)
+                    {
+                        ACTimer.save(CurrentTimer.properties);
+                    }
+                    else
+                    {
+                        ACTimer.update(CurrentTimer.properties);
+                    }
+
+
                     clearInput();
                     $rootScope.$emit('update-list', {}  );
                 }
