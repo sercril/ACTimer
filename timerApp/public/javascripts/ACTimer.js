@@ -16,7 +16,7 @@ angular.module('actimer', ['ngResource',"services"])
         .factory('Categories',["$resource", function($resource){
             return $resource("http://actimer.dev/category/:id", {}, null);
         }])
-        .controller('ProjectsTasksController', ['$scope', 'ProjectTasks', 'Projects', function($scope, ProjectTasks, Projects){
+        .controller('ProjectsTasksController', ['$scope', '$rootScope', 'ProjectTasks', 'Projects', function($scope, $rootScope, ProjectTasks, Projects){
 
             $scope.loadTasks = function(){
                 ProjectTasks.query({id:$scope.selectedProject},function(projects){
@@ -34,11 +34,18 @@ angular.module('actimer', ['ngResource',"services"])
                 CurrentTimer.properties.task = $scope.selectedTask;
             };
 
+            $rootScope.$on('set-project', function(event, obj){
+                $scope.selectedProject = obj.projectId;
+                console.log($scope.selectedProject);
+            });
 
+            $rootScope.$on('set-task', function(event, obj){
+                $scope.selectedTask = obj.taskId;
+            });
 
             $scope.loadProjects();
         }])
-        .controller('CategoryController', ['$scope', 'Categories', function($scope, Categories){
+        .controller('CategoryController', ['$scope', '$rootScope', 'Categories', function($scope, $rootScope, Categories){
 
             Categories.query(function(data){
                 $scope.categories = data;
@@ -47,58 +54,66 @@ angular.module('actimer', ['ngResource',"services"])
             $scope.changeCategory = function() {
                 CurrentTimer.properties.category = $scope.selectedCategory;
             };
+
+            $rootScope.$on('set-category', function(event, obj){
+               $scope.selectedCategory = obj.categoryId;
+            });
             
         }])
-        .controller("TimerFormController", ['$scope', '$rootScope',  "ACTimer", function($scope, $rootScope,  ACTimer){
+        .controller("TimerFormController", ['$scope', '$rootScope', 'Tasks', "ACTimer", function($scope, $rootScope, Tasks, ACTimer){
 
 
+            $scope.currentTimer = null;
+
+            $rootScope.$on('edit-load', function(event, obj){
+                var timeParts;
+                $scope.currentTimer = CurrentTimer.properties;
+                timeParts = moment().startOf('day')
+                    .seconds(parseInt($scope.currentTimer.elapsedTime))
+                    .format('H:mm:ss').split(':');
+                $scope.currentTimer.hours = parseInt(timeParts[0]);
+                $scope.currentTimer.minutes = parseInt(timeParts[1]);
+                $scope.currentTimer.seconds = parseInt(timeParts[2]);
+
+                $rootScope.$emit('set-category', {categoryId:$scope.currentTimer.category});
+
+                Tasks.get({id:$scope.currentTimer.task},function(task){
+                    $rootScope.$emit('set-project', {projectId:task.projectId});
+                    $rootScope.$emit('set-task', {taskId:$scope.currentTimer.task});
+                });
+
+                console.log($scope.currentTimer);
+            });
 
             function validate()
             {
                 var numReg = /[0-9]/;
-                if(!numReg.test($scope.hours))
+                if(!numReg.test($scope.currentTimer.hours))
                 {
-                    $scope.hours = 0;
+                    $scope.currentTimer.hours = 0;
                 }
-                if(!numReg.test($scope.minutes))
+                if(!numReg.test($scope.currentTimer.minutes))
                 {
-                    $scope.minutes = 0;
+                    $scope.currentTimer.minutes = 0;
                 }
 
-                return ($scope.description !== ""
-                        && $scope.timerDate !== null
-                        && numReg.test($scope.seconds)
+                return ($scope.currentTimer.description !== ""
+                        && $scope.currentTimer.timerDate !== null
+                        && numReg.test($scope.currentTimer.seconds)
                         && CurrentTimer.properties.task > 0
                         && CurrentTimer.properties.category > 0);
             }
 
-            function clearInput()
-            {
-                $scope.hours = "";
-                $scope.minutes = "";
-                $scope.seconds = "";
-                $scope.description = "";
-            }
-
             function convertTime()
             {
-                return (($scope.hours * 3600) + ($scope.minutes * 60) + parseInt($scope.seconds));
+                return (($scope.currentTimer.hours * 3600) + ($scope.currentTimer.minutes * 60) + parseInt($scope.currentTimer.seconds));
             }
 
-            $scope.submit = function(){
-
-                var newTimer, time = convertTime();
-
+            $scope.submit = function() {
                 if(validate()) {
-                    time = convertTime();
-                    newTimer = {
-                        description: $scope.description,
-                        date: $scope.timerDate,
-                        elapsedTime: time,
-                        billable: $scope.billable
-                    };
+                    $scope.currentTimer.elapsedTime = convertTime();
 
-                    jQuery.extend(CurrentTimer.properties, newTimer);
+                    jQuery.extend(CurrentTimer.properties, $scope.currentTimer);
 
                     if (0 === CurrentTimer.properties._id)
                     {
@@ -106,11 +121,9 @@ angular.module('actimer', ['ngResource',"services"])
                     }
                     else
                     {
-                        ACTimer.update(CurrentTimer.properties);
+                        ACTimer.update( {id:CurrentTimer.properties._id}, CurrentTimer.properties);
                     }
 
-
-                    clearInput();
                     $rootScope.$emit('update-list', {}  );
                 }
                 else
@@ -137,22 +150,19 @@ angular.module('actimer', ['ngResource',"services"])
                 {
                     //Get Category by ID
                     Categories.get({id:timerToFormat.category},function(category){
-                        timerToFormat.categoryId = timerToFormat.category;
-                        timerToFormat.category = category.categoryName;
+                        timerToFormat.categoryName = category.categoryName;
                     });
                     //Get Task by ID
                     Tasks.get({id:timerToFormat.task},function(task){
-                        timerToFormat.taskId = timerToFormat.task;
-                        timerToFormat.task = task.taskName;
+                        timerToFormat.taskName = task.taskName;
                     });
                     //Change Date into m/d/Y format
                     timerToFormat.date = moment(timerToFormat.date).format('MM/DD/YYYY');
 
                     //Parse Time
-                    timerToFormat.totalSeconds = timerToFormat.elapsedTime;
-                    timerToFormat.elapsedTime = parseTimer(timerToFormat.totalSeconds);
+                    timerToFormat.elapsedTimeReadable = parseTimer(timerToFormat.elapsedTime);
                     //Change billable to say Not billable/billable
-                    timerToFormat.billable = (timerToFormat.billable) ? "Billable":"Not Billable";
+                    timerToFormat.billableReadable = (timerToFormat.billable) ? "Billable":"Not Billable";
 
                     timerToFormat.active = false;
 
@@ -272,6 +282,16 @@ angular.module('actimer', ['ngResource',"services"])
                 }
                 else if('form' === $scope.modal.type)
                 {
+                    if('update' === $scope.modal.action)
+                    {
+                        jQuery.extend(CurrentTimer.properties, $scope.modal.timer);
+                        $rootScope.$emit('edit-load', {});
+                    }
+                    else if('create' === $scope.modal.action)
+                    {
+                        CurrentTimer = new ACTimer(null);
+                    }
+
                     $scope.form.active = true;
                 }
 

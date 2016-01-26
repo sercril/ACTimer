@@ -29,22 +29,22 @@
         <div class="fa fa-play play" ng-class="{ 'fa-play play' : true !== actimer.active, 'fa-pause pause' : true === actimer.active }" ng-click="toggleTimer(actimer)">
         </div>
         <div class="task">
-            {{actimer.task}}
+            {{actimer.taskName}}
         </div>
         <div class="description">
             {{actimer.description}}
         </div>
         <div class="category">
-            {{actimer.category}}
+            {{actimer.categoryName}}
         </div>
         <div class="date">
             {{actimer.date}}
         </div>
         <div class="elapsed-time">
-            {{actimer.elapsedTime}}
+            {{actimer.elapsedTimeReadable}}
         </div>
         <div class="billable">
-            {{actimer.billable}}
+            {{actimer.billableReadable}}
         </div>
         <div class="fa fa-pencil edit" ng-click="editTimer(actimer)">
         </div>
@@ -85,18 +85,18 @@
                                 <div class="form-group">
                                     <div class="row clearfix">
                                         <div class="input-group column full">
-                                            <input type="text" id="timerDescription" class="form-control" placeholder="Description" ng-model="description">
+                                            <input type="text" id="timerDescription" class="form-control" placeholder="Description" ng-model="currentTimer.description">
                                         </div>
                                     </div>
                                     <div class="row clearfix">
                                         <div class="input-group column third">
-                                            <input type="text" id="timerHours" class="form-control" placeholder="Hours" ng-model="hours">
+                                            <input type="text" id="timerHours" class="form-control" placeholder="Hours" ng-model="currentTimer.hours">
                                         </div>
                                         <div class="input-group column third">
-                                            <input type="text" id="timerMinutes" class="form-control" placeholder="Minutes" ng-model="minutes">
+                                            <input type="text" id="timerMinutes" class="form-control" placeholder="Minutes" ng-model="currentTimer.minutes">
                                         </div>
                                         <div class="input-group column third">
-                                            <input type="text" id="timerSeconds" class="form-control" placeholder="Seconds" ng-model="seconds">
+                                            <input type="text" id="timerSeconds" class="form-control" placeholder="Seconds" ng-model="currentTimer.seconds">
                                         </div>
                                     </div>
                                     <div class="row clearfix">
@@ -108,7 +108,7 @@
                                     </div>
                                     <div class="row clearfix">
                                         <div class='input-group date column full'>
-                                            <input type='text' class="form-control" id="timerDate" placeholder="Date" ng-model="timerDate" />
+                                            <input type='text' class="form-control" id="timerDate" placeholder="Date" ng-model="currentTimer.date" />
                                         </div>
                                     </div>
                                     <div ng-controller="ProjectsTasksController">
@@ -131,7 +131,7 @@
                                     <div class="row clearfix flow-opposite">
                                         <div class="input-group column half">
                                             <div class="checkbox checkbox-inline">
-                                                <input type="checkbox" id="timerBillable" ng-model="billable">
+                                                <input type="checkbox" id="timerBillable" ng-model="currentTimer.billable">
                                                 <label for="timerBillable">Billable</label>
                                             </div>
                                         </div>
