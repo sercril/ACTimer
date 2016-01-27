@@ -108,21 +108,19 @@
                                     </div>
                                     <div class="row clearfix">
                                         <div class='input-group date column full'>
-                                            <input type='text' class="form-control" id="timerDate" placeholder="Date" ng-model="currentTimer.date" />
+                                            <input type='text' class="form-control timerDate" placeholder="Date" ng-model="currentTimer.date" />
                                         </div>
                                     </div>
                                     <div ng-controller="ProjectsTasksController">
                                         <div class="row clearfix" >
                                             <div class="dropdown column full" >
-                                                <select name="project" class="wide" ng-model="selectedProject" ng-change="loadTasks()">
-                                                    <option ng-repeat="project in projects" value="{{project.projectId}}">{{project.projectName}}</option>
+                                                <select name="project" class="wide" ng-model="selectedProject" ng-change="loadTasks()" ng-options="project.projectId as project.projectName for project in projects">
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row clearfix">
                                             <div class="dropdown column full">
-                                                <select name="task" class="wide" ng-model="selectedTask" ng-change="changeTask()">
-                                                    <option ng-repeat="task in tasks" value="{{task.taskId}}">{{task.taskName}}</option>
+                                                <select name="task" class="wide" ng-model="selectedTask" ng-change="changeTask()" ng-options="task.taskId as task.taskName for task in tasks">
                                                 </select>
                                             </div>
                                         </div>
@@ -143,7 +141,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close('form')">{{modal.cancel}}</button>
-                    <button type="button" class="btn btn-primary">{{modal.confirm}}</button>
+                    <button type="button" class="btn btn-primary" ng-click="confirm()">{{modal.confirm}}</button>
                 </div>
             </div>
         </form>

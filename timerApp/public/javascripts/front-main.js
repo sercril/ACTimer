@@ -1,3 +1,3 @@
 $(function () {
-    $('#timerDate').datepicker();
+    $('.timerDate').datepicker();
 });

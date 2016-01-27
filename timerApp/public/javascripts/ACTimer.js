@@ -19,10 +19,20 @@ angular.module('actimer', ['ngResource',"services"])
         .controller('ProjectsTasksController', ['$scope', '$rootScope', 'ProjectTasks', 'Projects', function($scope, $rootScope, ProjectTasks, Projects){
 
             $scope.loadTasks = function(){
-                ProjectTasks.query({id:$scope.selectedProject},function(projects){
-                    $scope.tasks = projects;
-                });
+               loadTasks();
             };
+
+            function loadTasks(taskId)
+            {
+                ProjectTasks.query({id:$scope.selectedProject},function(tasks){
+                    $scope.tasks = tasks;
+
+                    if(taskId !== 'undefined')
+                    {
+                        $scope.selectedTask = taskId;
+                    }
+                });
+            }
 
             $scope.loadProjects = function(){
                 Projects.query(function(projects){
@@ -34,13 +44,9 @@ angular.module('actimer', ['ngResource',"services"])
                 CurrentTimer.properties.task = $scope.selectedTask;
             };
 
-            $rootScope.$on('set-project', function(event, obj){
+            $rootScope.$on('set-project-task', function(event, obj){
                 $scope.selectedProject = obj.projectId;
-                console.log($scope.selectedProject);
-            });
-
-            $rootScope.$on('set-task', function(event, obj){
-                $scope.selectedTask = obj.taskId;
+                loadTasks(obj.taskId);
             });
 
             $scope.loadProjects();
@@ -78,11 +84,8 @@ angular.module('actimer', ['ngResource',"services"])
                 $rootScope.$emit('set-category', {categoryId:$scope.currentTimer.category});
 
                 Tasks.get({id:$scope.currentTimer.task},function(task){
-                    $rootScope.$emit('set-project', {projectId:task.projectId});
-                    $rootScope.$emit('set-task', {taskId:$scope.currentTimer.task});
+                    $rootScope.$emit('set-project-task', {projectId:task.projectId, taskId:$scope.currentTimer.task});
                 });
-
-                console.log($scope.currentTimer);
             });
 
             function validate()
@@ -131,6 +134,11 @@ angular.module('actimer', ['ngResource',"services"])
                     console.log("Invalid Input");
                 }
             };
+
+            $rootScope.$on('submit-timer-form', function(event, obj){
+                $scope.submit();
+            });
+
         }])
         .controller("TimerListController", ['$scope', '$rootScope', '$interval', "ACTimer", "Tasks", "Categories", function($scope, $rootScope, $interval, ACTimer, Tasks, Categories){
 
@@ -264,14 +272,15 @@ angular.module('actimer', ['ngResource',"services"])
                     case 'create':
                         break;
                     case 'update':
+                        $rootScope.$emit('submit-timer-form', {});
+
                         break;
                     case 'delete':
                         ACTimer.delete({id: $scope.modal.timer._id}, function(){});
                         break;
                 }
-
-
                 $rootScope.$emit('update-list', {});
+                $scope.close();
             };
 
             $rootScope.$on('display-modal', function(event, obj){
