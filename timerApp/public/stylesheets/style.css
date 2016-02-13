@@ -125,3 +125,6 @@ div.fa {
 div.modal.show {
   display: block;
 }
+.ui-datepicker {
+  z-index: 9999 !important;
+}
