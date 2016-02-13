@@ -16,6 +16,18 @@ angular.module('actimer', ['ngResource',"services"])
         .factory('Categories',["$resource", function($resource){
             return $resource("http://actimer.dev/category/:id", {}, null);
         }])
+        .controller('TimerControlsController',['$scope', '$rootScope', function($scope, $rootScope){
+            $scope.addTimer = function() {
+                var addModal = {
+                    title: 'Add Timer',
+                    confirm: 'Add',
+                    cancel: 'Cancel',
+                    action: 'create',
+                    type: 'form'
+                };
+                $rootScope.$emit('display-modal', addModal);
+            };
+        }])
         .controller('ProjectsTasksController', ['$scope', '$rootScope', 'ProjectTasks', 'Projects', function($scope, $rootScope, ProjectTasks, Projects){
 
             $scope.loadTasks = function(){
@@ -113,6 +125,7 @@ angular.module('actimer', ['ngResource',"services"])
             }
 
             $scope.submit = function() {
+                console.log(CurrentTimer);
                 if(validate()) {
                     $scope.currentTimer.elapsedTime = convertTime();
 
@@ -191,8 +204,9 @@ angular.module('actimer', ['ngResource',"services"])
                 $scope.actimers.forEach(function(t){
                     if(true === t.active)
                     {
-                        t.totalSeconds += 1;
-                        t.elapsedTime = parseTimer(t.totalSeconds);
+                        t.elapsedTime += 1;
+                        t.elapsedTimeReadable = parseTimer(t.elapsedTime);
+                        ACTimer.update( {id:t._id}, t)
                     }
                 });
             }
@@ -207,6 +221,7 @@ angular.module('actimer', ['ngResource',"services"])
 
 
             $scope.toggleTimer = function(timer) {
+
                 if(true === timer.active)
                 {
                     $rootScope.$emit('stop-timer', timer);
@@ -270,10 +285,10 @@ angular.module('actimer', ['ngResource',"services"])
                 switch ($scope.modal.action)
                 {
                     case 'create':
+                        $rootScope.$emit('submit-timer-form', {});
                         break;
                     case 'update':
                         $rootScope.$emit('submit-timer-form', {});
-
                         break;
                     case 'delete':
                         ACTimer.delete({id: $scope.modal.timer._id}, function(){});

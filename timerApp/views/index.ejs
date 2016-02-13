@@ -25,7 +25,15 @@
 </head>
 <body>
 <div class="timers" ng-controller="TimerListController">
-    <div class="well" ng-repeat="actimer in actimers">
+    <div class="column full no-padding controls" ng-controller="TimerControlsController">
+        <div class="column half no-padding">
+            <a href="#" class="btn btn-primary" ng-click="addTimer()">Add Timer</a>
+        </div>
+        <div class="column half flow-opposite no-padding">
+            <a href="#" class="btn btn-primary disabled flow-opposite">Submit Timers</a>
+        </div>
+    </div>
+    <div class="well column full" ng-repeat="actimer in actimers">
         <div class="fa fa-play play" ng-class="{ 'fa-play play' : true !== actimer.active, 'fa-pause pause' : true === actimer.active }" ng-click="toggleTimer(actimer)">
         </div>
         <div class="task">

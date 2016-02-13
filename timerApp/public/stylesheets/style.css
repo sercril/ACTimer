@@ -99,7 +99,8 @@ select.wide {
 }
 .timers .well .play,
 .timers .well .edit,
-.timers .well .delete {
+.timers .well .delete,
+.timers .well .pause {
   margin: auto;
   cursor: pointer;
 }
@@ -127,4 +128,10 @@ div.modal.show {
 }
 .ui-datepicker {
   z-index: 9999 !important;
+}
+.no-padding {
+  padding: 0 !important;
+}
+div.controls {
+  margin: 1em 0;
 }
