@@ -1,4 +1,4 @@
-function ACTimer(props) {
+function ActiveCollabTimer(props) {
 
     this.properties = {
         _id: 0,
@@ -17,8 +17,8 @@ function ACTimer(props) {
     }
 }
 
-ACTimer.prototype = {
-    constructor: ACTimer
+ActiveCollabTimer.prototype = {
+    constructor: ActiveCollabTimer
 };
 
 

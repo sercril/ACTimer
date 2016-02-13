@@ -1,4 +1,4 @@
-var CurrentTimer = new ACTimer(null);
+var CurrentTimer = new ActiveCollabTimer(null);
 
 angular.module('actimer', ['ngResource',"services"])
         .factory('ACTimer',["$resource", function($resource){
@@ -128,11 +128,13 @@ angular.module('actimer', ['ngResource',"services"])
                 console.log(CurrentTimer);
                 if(validate()) {
                     $scope.currentTimer.elapsedTime = convertTime();
-
+                    $scope.currentTimer.date = new Date($scope.currentTimer.date);
                     jQuery.extend(CurrentTimer.properties, $scope.currentTimer);
+
 
                     if (0 === CurrentTimer.properties._id)
                     {
+                        CurrentTimer.properties._id = undefined;
                         ACTimer.save(CurrentTimer.properties);
                     }
                     else
@@ -313,9 +315,8 @@ angular.module('actimer', ['ngResource',"services"])
                     }
                     else if('create' === $scope.modal.action)
                     {
-                        CurrentTimer = new ACTimer(null);
+                        CurrentTimer = new ActiveCollabTimer(null);
                     }
-
                     $scope.form.active = true;
                 }
 
