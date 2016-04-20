@@ -54,6 +54,8 @@
         <div class="billable">
             {{actimer.billableReadable}}
         </div>
+        <div class="fa fa-check submit" ng-click="submitTimer(actimer)">
+        </div>
         <div class="fa fa-pencil edit" ng-click="editTimer(actimer)">
         </div>
         <div class="fa fa-trash delete" ng-click="removeTimer(actimer)">
@@ -133,7 +135,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row clearfix flow-opposite">
                                         <div class="input-group column half">
                                             <div class="checkbox checkbox-inline">

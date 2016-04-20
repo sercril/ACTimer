@@ -16,6 +16,9 @@ angular.module('actimer', ['ngResource',"services"])
         .factory('Categories',["$resource", function($resource){
             return $resource("http://actimer.dev/category/:id", {}, null);
         }])
+        .factory('TimerSubmit', ["$resource", function($resource){
+            return $resource("http://actimer.dev/submit/", {}, null);
+        }])
         .controller('TimerControlsController',['$scope', '$rootScope', function($scope, $rootScope){
             $scope.addTimer = function() {
                 var addModal = {
@@ -155,7 +158,7 @@ angular.module('actimer', ['ngResource',"services"])
             });
 
         }])
-        .controller("TimerListController", ['$scope', '$rootScope', '$interval', "ACTimer", "Tasks", "Categories", function($scope, $rootScope, $interval, ACTimer, Tasks, Categories){
+        .controller("TimerListController", ['$scope', '$rootScope', '$interval', "ACTimer", "Tasks", "Categories", "TimerSubmit", function($scope, $rootScope, $interval, ACTimer, Tasks, Categories, TimerSubmit){
 
 
             function parseTimer(timeString)
@@ -165,6 +168,18 @@ angular.module('actimer', ['ngResource',"services"])
                     .format('H:mm:ss');
 
                 return timeString;
+            }
+
+            function incrementTimers()
+            {
+                $scope.actimers.forEach(function(t){
+                    if(true === t.active)
+                    {
+                        t.elapsedTime += 1;
+                        t.elapsedTimeReadable = parseTimer(t.elapsedTime);
+                        ACTimer.update( {id:t._id}, t)
+                    }
+                });
             }
 
             $scope.loadTimers = function(){
@@ -201,17 +216,7 @@ angular.module('actimer', ['ngResource',"services"])
 
             };
 
-            function incrementTimers()
-            {
-                $scope.actimers.forEach(function(t){
-                    if(true === t.active)
-                    {
-                        t.elapsedTime += 1;
-                        t.elapsedTimeReadable = parseTimer(t.elapsedTime);
-                        ACTimer.update( {id:t._id}, t)
-                    }
-                });
-            }
+
 
             $scope.startTimer = function(timer) {
                 timer.active = true;
@@ -260,6 +265,39 @@ angular.module('actimer', ['ngResource',"services"])
             };
 
             $interval(incrementTimers, 1000);
+
+            $scope.submitTimer = function(timer) {
+                console.log(timer);
+
+
+                var valueParts = moment().startOf('day')
+                    .seconds(parseInt(timer.elapsedTime))
+                    .format('H:mm:ss');
+
+                valueParts = valueParts.split(':');
+
+                var roundedSecs = (parseInt(valueParts[2]) >= 30 ? 1:0);
+                var roundedMins = Math.ceil(parseInt((valueParts[1])+roundedSecs)/15)/4;
+
+                var finalVal = parseInt(valueParts[0]) + roundedMins;
+
+                Tasks.get({id:timer.task}, function(task){
+                    var timeRecord = {
+                        job_type_id: parseInt(timer.category),
+                        summary: timer.description,
+                        record_date: moment(timer.date).format('YYYY-MM-DD'),
+                        billable_status: (timer.billable ? 1:0),
+                        value: finalVal,
+                        task_id: timer.task,
+                        project_id: task.projectId
+                    };
+
+                    TimerSubmit.save(timeRecord);
+
+                });
+
+
+            };
 
 
             $rootScope.$on('update-list', function(event, obj){

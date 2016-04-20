@@ -96,11 +96,13 @@ select.wide {
 .timers .well div {
   display: inline-block;
   text-align: center;
+  vertical-align: middle;
 }
 .timers .well .play,
 .timers .well .edit,
 .timers .well .delete,
-.timers .well .pause {
+.timers .well .pause,
+.timers .well .submit {
   margin: auto;
   cursor: pointer;
 }
@@ -118,7 +120,7 @@ select.wide {
   width: 9%;
 }
 .timers .well .billable {
-  width: 6%;
+  width: 5%;
 }
 div.fa {
   width: 1%;
