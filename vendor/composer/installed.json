@@ -1,0 +1,41 @@
+[
+    {
+        "name": "activecollab/activecollab-sdk",
+        "version": "1.0.5",
+        "version_normalized": "1.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/activecollab/activecollab-sdk.git",
+            "reference": "694243a4d571203e049ce8a7e1a0f8826a34fadc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/activecollab/activecollab-sdk/zipball/694243a4d571203e049ce8a7e1a0f8826a34fadc",
+            "reference": "694243a4d571203e049ce8a7e1a0f8826a34fadc",
+            "shasum": ""
+        },
+        "time": "2014-06-27 06:04:17",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "ActiveCollab": "/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Ilija Studen",
+                "email": "ilija.studen@gmail.com"
+            }
+        ],
+        "description": "This is a simple PHP library that makes communication with activeCollab API easy",
+        "homepage": "https://www.activecollab.com/add-ons.html",
+        "keywords": [
+            "activecollab"
+        ]
+    }
+]

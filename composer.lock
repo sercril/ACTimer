@@ -1,0 +1,56 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "63a7295c3df1af93392c265a5352e56c",
+    "content-hash": "5d74a14b7348ec1a3b9bbb636aedc4ff",
+    "packages": [
+        {
+            "name": "activecollab/activecollab-sdk",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/activecollab/activecollab-sdk.git",
+                "reference": "694243a4d571203e049ce8a7e1a0f8826a34fadc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/activecollab/activecollab-sdk/zipball/694243a4d571203e049ce8a7e1a0f8826a34fadc",
+                "reference": "694243a4d571203e049ce8a7e1a0f8826a34fadc",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ActiveCollab": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ilija Studen",
+                    "email": "ilija.studen@gmail.com"
+                }
+            ],
+            "description": "This is a simple PHP library that makes communication with activeCollab API easy",
+            "homepage": "https://www.activecollab.com/add-ons.html",
+            "keywords": [
+                "activecollab"
+            ],
+            "time": "2014-06-27 06:04:17"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
