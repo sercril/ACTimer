@@ -6,4 +6,24 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
+    'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
+    'Symfony\\Component\\Routing\\' => array($vendorDir . '/symfony/routing'),
+    'Symfony\\Component\\HttpKernel\\' => array($vendorDir . '/symfony/http-kernel'),
+    'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
+    'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
+    'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
+    'Symfony\\Component\\Debug\\' => array($vendorDir . '/symfony/debug'),
+    'League\\Fractal\\' => array($vendorDir . '/league/fractal/src'),
+    'Illuminate\\Support\\' => array($vendorDir . '/illuminate/support'),
+    'Illuminate\\Session\\' => array($vendorDir . '/illuminate/session'),
+    'Illuminate\\Routing\\' => array($vendorDir . '/illuminate/routing'),
+    'Illuminate\\Pipeline\\' => array($vendorDir . '/illuminate/pipeline'),
+    'Illuminate\\Http\\' => array($vendorDir . '/illuminate/http'),
+    'Illuminate\\Filesystem\\' => array($vendorDir . '/illuminate/filesystem'),
+    'Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),
+    'Illuminate\\Container\\' => array($vendorDir . '/illuminate/container'),
+    'Dingo\\Blueprint\\' => array($vendorDir . '/dingo/blueprint/src'),
+    'Dingo\\Api\\' => array($vendorDir . '/dingo/api/src'),
+    'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
 );

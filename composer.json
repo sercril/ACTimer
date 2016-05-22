@@ -1,5 +1,6 @@
 {
     "require": {
-        "activecollab/activecollab-sdk": "^1.0"
+        "activecollab/activecollab-sdk": "^1.0",
+	"dingo/api": "1.0.*@dev"
     }
 }
