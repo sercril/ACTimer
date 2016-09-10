@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 $api->version('v1', function($api){
-    $api->get('');
+    $api->post('request', 'App\Http\Controllers\ACController@ACRequest');
 });

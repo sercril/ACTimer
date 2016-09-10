@@ -8,7 +8,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "dingo/api": "1.0.*@dev",
-        "activecollab/activecollab-sdk": "^1.0"
+        "activecollab/activecollab-feather-sdk": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
