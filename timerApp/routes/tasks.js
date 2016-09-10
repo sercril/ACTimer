@@ -8,15 +8,8 @@ var Category = require("../models/Category.js");
 
 var Request = require("request");
 
-var apiUrl = "http://projects.firefly.cc/";
-var apiKey = "19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF";
+var apiUrl = "http://acapi.actimer.dev/request";
 
-var ActiveCollab = require('activecollab');
-
-var ac = new ActiveCollab(apiUrl, apiKey);
-
-//http://projects.firefly.cc/api.php?path_info=projects&auth_api_token=19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF&format=json&submitted=submitted
-//http://projects.firefly.cc/api.php?path_info=projects/486/hourly-rates&auth_api_token=19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF&format=json&submitted=submitted
 //GET operations
 router.get('/', function(req, res, next) {
   Task.find(function(err, tasks){
@@ -35,39 +28,71 @@ router.get('/:id', function(req, res, next) {
     {
         Task.remove({}, function(){});
         Projects.remove({}, function(){});
-        ac.projects.getAll(function(ps){
-            ps.forEach(function(project){
-                ac.tasks.getAll(project.id, function(ts){
-                    Projects.create({
+
+        Request({
+            url: apiUrl,
+            qs: {
+                path_info:"projects",
+                request_type:"get"
+            },
+            method:"POST"
+        }, function(projectsError,projectsResp,projectsBody){
+
+            if(projectsError)
+            {
+                console.error(projectsError);
+            }
+            else
+            {
+                projectsBody = JSON.parse(projectsBody);
+
+                projectsBody.forEach(function(project){
+                    var newProject = {
                         projectId: project.id,
                         projectName: project.name
-                    });
-                    if(ts !== null && typeof ts !== 'undefined' && ts.constructor === Array)
-                    {
-                        ts.forEach(function(t){
-                            Task.create({
-                                taskId: t.id,
-                                taskName: t.name,
-                                projectId: project.id
+                    };
+                    Projects.create(newProject);
+                    Request({
+                        url: apiUrl,
+                        qs: {
+                            path_info: "projects/"+project.id+"/tasks",
+                            request_type:"get"
+                        },
+                        method: "POST"
+                    }, function(tasksError, tasksResp, tasksBody){
+
+                        if(tasksError)
+                        {
+                            console.error(tasksError);
+                        }
+                        else
+                        {
+                            tasksBody = JSON.parse(tasksBody);
+
+                            tasksBody = tasksBody.tasks;
+
+                            tasksBody.forEach(function(task){
+                                var newTask = {
+                                    taskId: task.id,
+                                    taskName: task.name,
+                                    projectId: project.id
+                                };
+                                Task.create(newTask);
                             });
-                        });
-                    }
-
+                        }
+                    });
                 });
-            });
-
+            }
         });
 
         Request({
-            url:"http://projects.firefly.cc/api.php",
+            url: apiUrl,
             qs: {
-                path_info:"projects/486/hourly-rates",
-                auth_api_token:"19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF",
-                format:"json",
-                submitted:"submitted"
+                path_info:"job-types",
+                request_type: "get"
             },
-            method:"GET"
-        }, function(error,resp,body){
+            method:"POST"
+        }, function(error,resp,categoryList){
             if(error)
             {
                 console.error(error);
@@ -75,21 +100,15 @@ router.get('/:id', function(req, res, next) {
             else
             {
                 Category.remove({}, function(){});
-                body = JSON.parse(body);
+                categoryList = JSON.parse(categoryList);
 
-                body.forEach(function(cat){
-
-
+                categoryList.forEach(function(cat){
                     Category.create({
                         categoryId:cat.id,
                         categoryName:cat.name
                     });
-
-
                 });
-
-
-                res.json("Done");
+                res.json({result:'success'});
             }
         });
     }

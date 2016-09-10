@@ -19,7 +19,9 @@ angular.module('actimer', ['ngResource',"services"])
         .factory('TimerSubmit', ["$resource", function($resource){
             return $resource("http://actimer.dev/submit/", {}, null);
         }])
-        .controller('TimerControlsController',['$scope', '$rootScope', function($scope, $rootScope){
+        .controller('TimerControlsController',['$scope', '$rootScope', 'Tasks', function($scope, $rootScope, Tasks){
+            $scope.reloading = false;
+
             $scope.addTimer = function() {
                 var addModal = {
                     title: 'Add Timer',
@@ -30,6 +32,14 @@ angular.module('actimer', ['ngResource',"services"])
                 };
                 $rootScope.$emit('display-modal', addModal);
             };
+
+            $scope.reloadTasks = function() {
+                $scope.reloading = true;
+                Tasks.get({id:'reload'}, function(result){
+                    if('success' === result.result)
+                        $scope.reloading = false;
+                });
+            };
         }])
         .controller('ProjectsTasksController', ['$scope', '$rootScope', 'ProjectTasks', 'Projects', function($scope, $rootScope, ProjectTasks, Projects){
 
@@ -39,14 +49,21 @@ angular.module('actimer', ['ngResource',"services"])
 
             function loadTasks(taskId)
             {
-                ProjectTasks.query({id:$scope.selectedProject},function(tasks){
-                    $scope.tasks = tasks;
+                if('' === taskId)
+                {
+                    $scope.selectedTask = taskId;
+                }
+                else
+                {
+                    ProjectTasks.query({id:$scope.selectedProject},function(tasks){
+                        $scope.tasks = tasks;
 
-                    if(taskId !== 'undefined')
-                    {
-                        $scope.selectedTask = taskId;
-                    }
-                });
+                        if(taskId !== 'undefined')
+                        {
+                            $scope.selectedTask = taskId;
+                        }
+                    });
+                }
             }
 
             $scope.loadProjects = function(){
@@ -155,6 +172,12 @@ angular.module('actimer', ['ngResource',"services"])
 
             $rootScope.$on('submit-timer-form', function(event, obj){
                 $scope.submit();
+            });
+
+            $rootScope.$on('reset-currentTimer', function(event, obj){
+                $scope.currentTimer = null;
+                $rootScope.$emit('set-category', {categoryId:''});
+                $rootScope.$emit('set-project-task', {projectId:'', taskId:''});
             });
 
         }])
@@ -354,6 +377,7 @@ angular.module('actimer', ['ngResource',"services"])
                     else if('create' === $scope.modal.action)
                     {
                         CurrentTimer = new ActiveCollabTimer(null);
+                        $rootScope.$emit('reset-currentTimer', {});
                     }
                     $scope.form.active = true;
                 }

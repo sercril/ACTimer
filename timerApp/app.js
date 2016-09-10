@@ -14,9 +14,9 @@ var submit = require('./routes/submit');
 
 var mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost/ACTimer", function(err){
-    //if(err)
-    //{
+mongoose.connect("localhost/ACTimer", function(err){
+    // if(err)
+    // {
     //    console.log("fuck");
     //}
     //else

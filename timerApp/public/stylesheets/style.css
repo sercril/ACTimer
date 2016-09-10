@@ -137,3 +137,8 @@ div.modal.show {
 div.controls {
   margin: 1em 0;
 }
+.center-item {
+  display: block;
+  margin: 0 auto;
+  float: none;
+}

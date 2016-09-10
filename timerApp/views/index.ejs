@@ -26,10 +26,18 @@
 <body>
 <div class="timers" ng-controller="TimerListController">
     <div class="column full no-padding controls" ng-controller="TimerControlsController">
-        <div class="column half no-padding">
+        <div class="column third no-padding">
             <a href="#" class="btn btn-primary" ng-click="addTimer()">Add Timer</a>
         </div>
-        <div class="column half flow-opposite no-padding">
+        <div class="column third no-padding">
+            <div class="center-item third">
+                <a href="#" class="btn btn-primary" ng-class="reloading ? 'disabled':''" ng-click="reloadTasks()">
+                    <span ng-class="reloading ? 'hidden':''">Reload Tasks</span>
+                    <i class="fa fa-refresh fa-spin fa-1x fa-fw" ng-class="reloading ? '':'hidden'"></i>
+                </a>
+            </div>
+        </div>
+        <div class="column third flow-opposite no-padding">
             <a href="#" class="btn btn-primary disabled flow-opposite">Submit Timers</a>
         </div>
     </div>
