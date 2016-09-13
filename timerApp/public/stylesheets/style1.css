@@ -1,5 +1,3 @@
-/* Variables */
-/* Global Styles */
 *,
 *:before,
 *:after {
@@ -12,67 +10,55 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 a {
-  color: #00b7ff;
+  color: #00B7FF;
 }
 .container {
   margin: 0 auto;
   width: 90%;
-  display: flex;
-  display: -webkit-flex;
 }
 .column {
-  flex-direction: column;
-  align-items: stretch;
+  float: left;
   padding-left: 1rem;
   padding-right: 1rem;
 }
 .full {
-  flex-direction: column;
-  align-items: stretch;
+  float: left;
   padding-left: 1rem;
   padding-right: 1rem;
   width: 100%;
 }
 .two-thirds {
-  flex-direction: column;
-  align-items: stretch;
+  float: left;
   padding-left: 1rem;
   padding-right: 1rem;
   width: 66.7%;
 }
 .half {
-  flex-direction: column;
-  align-items: stretch;
+  float: left;
   padding-left: 1rem;
   padding-right: 1rem;
   width: 50%;
 }
 .third {
-  flex-direction: column;
-  align-items: stretch;
+  float: left;
   padding-left: 1rem;
   padding-right: 1rem;
   width: 33.3%;
 }
 .fourth {
-  flex-direction: column;
-  align-items: stretch;
+  float: left;
   padding-left: 1rem;
   padding-right: 1rem;
   width: 25%;
 }
 .flow-opposite {
-  flex-direction: column;
-  align-items: stretch;
+  float: left;
   padding-left: 1rem;
   padding-right: 1rem;
   float: right;
 }
 .row {
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: center;
-  margin: 1rem auto;
+  margin: 1em auto;
 }
 .clearfix:before,
 .clearfix:after {
@@ -89,7 +75,7 @@ a {
   width: 100%;
 }
 .checkbox {
-  margin: auto 1rem;
+  margin: auto 1em;
 }
 .checkbox label::after {
   padding-top: 3px;
@@ -105,12 +91,10 @@ select.wide {
   font-size: 16px;
 }
 .timers {
-  padding: 0 9rem;
-}
-.timers .well {
-  justify-content: center;
+  padding: 0 9em;
 }
 .timers .well div {
+  display: inline-block;
   text-align: center;
   vertical-align: middle;
 }
@@ -121,43 +105,37 @@ select.wide {
 .timers .well .submit {
   margin: auto;
   cursor: pointer;
-  flex: 0 1 2%;
 }
 .timers .well .description {
-  flex: 2 1 35%;
+  text-align: center;
+  width: 45%;
 }
 .timers .well .task {
-  flex: 2 1 20%;
-}
-.timers .well .date {
-  flex: 2 1 10%;
+  width: 20%;
 }
 .timers .well .category {
-  flex: 2 1 10%;
+  width: 10%;
 }
 .timers .well .elapsed-time {
-  flex: 2 1 9%;
+  width: 9%;
 }
 .timers .well .billable {
-  flex: 2 1 5%;
+  width: 5%;
 }
 div.fa {
   width: 1%;
 }
-.modal.show {
-  display: flex;
+div.modal.show {
+  display: block;
 }
 .ui-datepicker {
   z-index: 9999 !important;
 }
-#no-padding {
-  padding: 0;
+.no-padding {
+  padding: 0 !important;
 }
-.controls {
-  margin: 1rem 0;
-}
-.controls .control-button {
-  margin: 0 28rem;
+div.controls {
+  margin: 1em 0;
 }
 .center-item {
   display: block;

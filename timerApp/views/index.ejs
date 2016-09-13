@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="stylesheets/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="stylesheets/font-awesome-4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="normalize-css/normalize.css">
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css" rel="stylesheet" integrity="sha384-Xqcy5ttufkC3rBa8EdiAyA1VgOGrmel2Y+wxm4K3kI3fcjTWlDWrlnxyD6hOi3PF" crossorigin="anonymous">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="stylesheets/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" href="jquery-ui/themes/base/all.css">
     <link rel="stylesheet" href="stylesheets/style.css">
@@ -14,8 +16,7 @@
     <script type="text/javascript" src="jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="moment/min/moment.min.js"></script>
     <script type="text/javascript" src="moment/min/locales.min.js"></script>
-    <script type="text/javascript" src="humanize-duration/humanize-duration.js"></script>
-    <script type="text/javascript" src="stylesheets/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="angular/angular.min.js"></script>
     <script type="text/javascript" src="angular-resource/angular-resource.min.js"></script>
     <script type="text/javascript" src="javascripts/front-main.js"></script>
@@ -24,24 +25,24 @@
     <script type="text/javascript" src="javascripts/ACTimer.js"></script>
 </head>
 <body>
-<div class="timers" ng-controller="TimerListController">
-    <div class="column full no-padding controls" ng-controller="TimerControlsController">
-        <div class="column third no-padding">
+<div class="container column timers" ng-controller="TimerListController">
+    <div class="container row full controls" ng-controller="TimerControlsController">
+        <div id="no-padding" class="control-button">
             <a href="#" class="btn btn-primary" ng-click="addTimer()">Add Timer</a>
         </div>
-        <div class="column third no-padding">
-            <div class="center-item third">
+        <div id="no-padding" class="control-button">
+            <div class="">
                 <a href="#" class="btn btn-primary" ng-class="reloading ? 'disabled':''" ng-click="reloadTasks()">
                     <span ng-class="reloading ? 'hidden':''">Reload Tasks</span>
                     <i class="fa fa-refresh fa-spin fa-1x fa-fw" ng-class="reloading ? '':'hidden'"></i>
                 </a>
             </div>
         </div>
-        <div class="column third flow-opposite no-padding">
+        <div id="no-padding" class="control-button">
             <a href="#" class="btn btn-primary disabled flow-opposite">Submit Timers</a>
         </div>
     </div>
-    <div class="well column full" ng-repeat="actimer in actimers">
+    <div class="container well row full" ng-repeat="actimer in actimers">
         <div class="fa fa-play play" ng-class="{ 'fa-play play' : true !== actimer.active, 'fa-pause pause' : true === actimer.active }" ng-click="toggleTimer(actimer)">
         </div>
         <div class="task">
@@ -106,7 +107,7 @@
                                             <input type="text" id="timerDescription" class="form-control" placeholder="Description" ng-model="currentTimer.description">
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
+                                    <div class="row clearfix container">
                                         <div class="input-group column third">
                                             <input type="text" id="timerHours" class="form-control" placeholder="Hours" ng-model="currentTimer.hours">
                                         </div>
