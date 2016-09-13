@@ -145,7 +145,6 @@ angular.module('actimer', ['ngResource',"services"])
             }
 
             $scope.submit = function() {
-                console.log(CurrentTimer);
                 if(validate()) {
                     $scope.currentTimer.elapsedTime = convertTime();
                     $scope.currentTimer.date = new Date($scope.currentTimer.date);
@@ -290,7 +289,7 @@ angular.module('actimer', ['ngResource',"services"])
             $interval(incrementTimers, 1000);
 
             $scope.submitTimer = function(timer) {
-                console.log(timer);
+                //console.log(timer);
 
 
                 var valueParts = moment().startOf('day')

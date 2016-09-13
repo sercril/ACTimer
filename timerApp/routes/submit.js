@@ -10,15 +10,16 @@ var apiUrl = "http://acapi.actimer.dev/request";
 router.post('/', function(req, res, next) {
 
     var auth_api_token = encodeURIComponent('19-D29SMh1Bxes64fjzFgRl9PT3OGK5ud5kaMXiBoFF');
-    var path_info = 'projects/'+req.body.project_id+'/tasks/'+req.body.task_id+'/tracking/time/add';
+    var path_info = 'projects/'+req.body.project_id+'/time-records';
     delete req.body.project_id;
-    delete req.body.task_id;
     var formObj = {
         'value':req.body.value,
         'user_id':19,
         'record_date':req.body.record_date,
         'job_type_id':req.body.job_type_id,
         'billable_status': req.body.billable,
+        'task_id': req.body.task_id,
+        'summary': req.body.summary,
         'request_type': 'post',
         'path_info': path_info
     };
