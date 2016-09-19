@@ -14,156 +14,17 @@
     <link rel="stylesheet" href="stylesheets/style.css">
     <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="jquery-ui/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="moment/min/moment.min.js"></script>
-    <script type="text/javascript" src="moment/min/locales.min.js"></script>
     <script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="angular/angular.min.js"></script>
-    <script type="text/javascript" src="angular-resource/angular-resource.min.js"></script>
-    <script type="text/javascript" src="javascripts/front-main.js"></script>
-    <script type="text/javascript" src="javascripts/Timer.js"></script>
-    <script type="text/javascript" src="javascripts/services.js"></script>
-    <script type="text/javascript" src="javascripts/ACTimer.js"></script>
 </head>
 <body>
-<div class="container column timers" ng-controller="TimerListController">
-    <div class="container row full controls" ng-controller="TimerControlsController">
-        <div id="no-padding" class="control-button">
-            <a href="#" class="btn btn-primary" ng-click="addTimer()">Add Timer</a>
-        </div>
-        <div id="no-padding" class="control-button">
-            <div class="">
-                <a href="#" class="btn btn-primary" ng-class="reloading ? 'disabled':''" ng-click="reloadTasks()">
-                    <span ng-class="reloading ? 'hidden':''">Reload Tasks</span>
-                    <i class="fa fa-refresh fa-spin fa-1x fa-fw" ng-class="reloading ? '':'hidden'"></i>
-                </a>
-            </div>
-        </div>
-        <div id="no-padding" class="control-button">
-            <a href="#" class="btn btn-primary disabled flow-opposite">Submit Timers</a>
-        </div>
-    </div>
-    <div class="container well row full" ng-repeat="actimer in actimers">
-        <div class="fa fa-play play" ng-class="{ 'fa-play play' : true !== actimer.active, 'fa-pause pause' : true === actimer.active }" ng-click="toggleTimer(actimer)">
-        </div>
-        <div class="task">
-            {{actimer.taskName}}
-        </div>
-        <div class="description">
-            {{actimer.description}}
-        </div>
-        <div class="category">
-            {{actimer.categoryName}}
-        </div>
-        <div class="date">
-            {{actimer.date}}
-        </div>
-        <div class="elapsed-time">
-            {{actimer.elapsedTimeReadable}}
-        </div>
-        <div class="billable">
-            {{actimer.billableReadable}}
-        </div>
-        <div class="fa fa-check submit" ng-click="submitTimer(actimer)">
-        </div>
-        <div class="fa fa-pencil edit" ng-click="editTimer(actimer)">
-        </div>
-        <div class="fa fa-trash delete" ng-click="removeTimer(actimer)">
-        </div>
-    </div>
-</div>
-<div class="modal" ng-controller="ModalController" ng-class="{ 'show' : true === message.active }">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" ng-click="close('message')" data-dismiss="modal" aria-hidden="true">&#x274C;</button>
-                <h4 class="modal-title">{{modal.title}}</h4>
-            </div>
-            <div class="modal-body">
-                <p>{{modal.message}}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close('message')">{{modal.cancel}}</button>
-                <button type="button" class="btn btn-primary" ng-click="confirm()">{{modal.confirm}}</button>
-            </div>
-        </div>
-    </div>
+<% include nav.ejs %>
+<div class="jumbotron custom">
+    <h1>AC Timer</h1>
+    <p>A web-based time-keeping system integrated with the <a href="https://www.activecollab.com/">ActiveCollab</a> project management system.</p>
+    <p><a class="btn btn-primary btn-lg">Get Started</a></p>
 </div>
 
-<div class="modal" ng-controller="ModalController" ng-class="{ 'show' : true === form.active }">
-    <div class="modal-dialog">
-        <form class="form-horizontal"  ng-submit="submit()" ng-controller="TimerFormController">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" ng-click="close('form')" data-dismiss="modal" aria-hidden="true">&#x274C;</button>
-                    <h4 class="modal-title">{{modal.title}}</h4>
-                </div>
-                <div class="modal-body">
-                    <fieldset>
-                        <div class="container">
-                            <div class="column full" >
-                                <div class="form-group">
-                                    <div class="row clearfix">
-                                        <div class="input-group column full">
-                                            <input type="text" id="timerDescription" class="form-control" placeholder="Description" ng-model="currentTimer.description">
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix container">
-                                        <div class="input-group column third">
-                                            <input type="text" id="timerHours" class="form-control" placeholder="Hours" ng-model="currentTimer.hours">
-                                        </div>
-                                        <div class="input-group column third">
-                                            <input type="text" id="timerMinutes" class="form-control" placeholder="Minutes" ng-model="currentTimer.minutes">
-                                        </div>
-                                        <div class="input-group column third">
-                                            <input type="text" id="timerSeconds" class="form-control" placeholder="Seconds" ng-model="currentTimer.seconds">
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="dropdown column full" ng-controller="CategoryController">
-                                            <select name="category" class="wide" ng-model="selectedCategory" ng-change="changeCategory()">
-                                                <option ng-repeat="category in categories" value="{{category.categoryId}}">{{category.categoryName}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class='input-group date column full'>
-                                            <input type='text' class="form-control timerDate" placeholder="Date" ng-model="currentTimer.date" />
-                                        </div>
-                                    </div>
-                                    <div ng-controller="ProjectsTasksController">
-                                        <div class="row clearfix" >
-                                            <div class="dropdown column full" >
-                                                <select name="project" class="wide" ng-model="selectedProject" ng-change="loadTasks()" ng-options="project.projectId as project.projectName for project in projects">
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="dropdown column full">
-                                                <select name="task" class="wide" ng-model="selectedTask" ng-change="changeTask()" ng-options="task.taskId as task.taskName for task in tasks">
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix flow-opposite">
-                                        <div class="input-group column half">
-                                            <div class="checkbox checkbox-inline">
-                                                <input type="checkbox" id="timerBillable" ng-model="currentTimer.billable">
-                                                <label for="timerBillable">Billable</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close('form')">{{modal.cancel}}</button>
-                    <button type="button" class="btn btn-primary" ng-click="confirm()">{{modal.confirm}}</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+
+
 </body>
 </html>

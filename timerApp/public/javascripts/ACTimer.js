@@ -1,6 +1,49 @@
+(function () {
+
+
 var CurrentTimer = new ActiveCollabTimer(null);
 
-angular.module('actimer', ['ngResource',"services"])
+function config($routeProvider, $locationProvider)
+{
+    $routeProvider
+        .when('/', {
+            templateUrl: '../../views/index.ejs',
+            controller: 'homeController',
+            controllerAs: 'vm'
+        })
+        .when('/register', {
+            templateUrl: '../../views/register.ejs',
+            controller: 'registerController',
+            controllerAs: 'vm'
+        })
+        .when('/login', {
+            templateUrl: '../../views/login.ejs',
+            controller: 'loginController',
+            controllerAs: 'vm'
+        })
+        .when('/profile', {
+            templateUrl: '../../views/profile.ejs',
+            controller: 'profileController',
+            controllerAs: 'vm'
+        })
+        .otherwise({redirectTo: '/'});
+
+    $locationProvider.html5Mode(true);
+}
+
+function run($rootScope, $location, authentication)
+{
+    $rootScope.$on('$routeChangeStart', function(event ,nextRoute, currentRoute){
+        if($location.path() === '/profile' && !authentication.isLoggedIn())
+        {
+            $location.path('/');
+        }
+    });
+}
+
+angular.module('actimer', ['ngResource',"services", 'ngRoute'])
+        .config(['$routeProvider', '$locationProvider', config])
+        .run(['$rootScope', '$location', 'authentication', run])
         .factory('ACTimer',["$resource", function($resource){
             return $resource("http://actimer.dev/timers/:id", null, {'update': {method:'PUT'}});
         }])
@@ -394,3 +437,5 @@ angular.module('actimer', ['ngResource',"services"])
                 }
             };
         }]);
+
+})();

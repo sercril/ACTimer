@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 
 var routes = require('./routes/index');
 var timers = require('./routes/timers');
@@ -25,6 +26,10 @@ mongoose.connect("localhost/ACTimer", function(err){
     //}
 });
 
+
+require('dotenv').config();
+require('./config/passport');
+
 var app = express();
 
 // view engine setup
@@ -41,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/', routes);
+app.use(passport.initialize());
 app.use('/timers', timers);
 app.use('/tasks', tasks);
 app.use('/projects', projects);
@@ -79,5 +85,12 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// app.use(function (err, req, res, next){
+//     if(err.name === 'UnauthorizedError')
+//     {
+//         res.status(401);
+//         res.json({'message': err.name + ': ' + err.message})
+//     }
+// });
 
 module.exports = app;

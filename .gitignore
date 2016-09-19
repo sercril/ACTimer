@@ -6,3 +6,4 @@ db
 bower_components
 *.log
 vagrant
+.env
